@@ -3,6 +3,7 @@ package com.example.demo;
 
 
 import com.example.demo.entity.*;
+import com.example.demo.entity.link.MyNode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,19 +19,43 @@ public class LinkedListApplicationTests {
 
 
 
+
+
     /**
      *  
      */
     @Test
     public void testLocalDateTime() {
-        String now  = LocalDate.now().toString();
-        String  past = "2021-02-01";
-        String  n = "2021-03-03";
-        String  future = "2021-03-04";
-        System.out.println(now.compareTo(past));
-        System.out.println(now.compareTo(n));
-        System.out.println(now.compareTo(future));
-        System.out.println("1234234");
+
+        MyNode myNode1 = new MyNode();
+        myNode1.setValue("myNode1");
+        MyNode myNode2 = new MyNode();
+        myNode2.setValue("myNode2");
+        MyNode myNode3 = new MyNode();
+        myNode3.setValue("myNode3");
+
+       //  形成链
+        myNode1.setNext(myNode2);
+        myNode2.setNext(myNode3);
+        // 这一步可以省去不写
+        myNode3.setNext(null);
+
+        // 在 myNode2 和  myNode3 直接插入 myNode4
+        MyNode myNode4 = new MyNode();
+        myNode4.setValue("myNode4");
+
+        myNode2.setNext(myNode4);
+
+        myNode4.setNext(myNode3);
+
+
+        MyNode tem = myNode1;
+        while(tem.getNext() == null){
+            System.out.println(tem);
+            tem  = tem.getNext();
+        }
+
+
     }
 
 

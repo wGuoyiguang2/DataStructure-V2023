@@ -26,11 +26,11 @@ public class AsyncServiceImp implements AsyncService {
     public void doNoReturn() {
         try {
             long start = System.currentTimeMillis();
-            log.info(" thread name ------>  {} ; 方法执行开始 ------>  {}",Thread.currentThread().getName(),LocalDateTime.now());
+            //log.info(" thread name ------>  {} ; 方法执行开始 ------>  {}",Thread.currentThread().getName(),LocalDateTime.now());
             // 这个方法执行需要三秒
             Thread.sleep(3000);
             long end = System.currentTimeMillis();
-            log.info(" thread name ------>  {} ; 方法执行结束 ------>  {}",Thread.currentThread().getName(),LocalDateTime.now());
+            //log.info(" thread name ------>  {} ; 方法执行结束 ------>  {}",Thread.currentThread().getName(),LocalDateTime.now());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class AsyncServiceImp implements AsyncService {
     @Override
     public ListenableFuture<Boy> execute01AsyncWithListenableFuture() {
         try {
-            log.info("进入了执行任务 thread ...... threadName {}",Thread.currentThread().getName());
+            //log.info("进入了执行任务 thread ...... threadName {}",Thread.currentThread().getName());
             return AsyncResult.forValue(getBoy());
         } catch (Throwable ex) {
             return AsyncResult.forExecutionException(ex);
