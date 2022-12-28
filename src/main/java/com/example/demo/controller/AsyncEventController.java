@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.event.AsynCustomEvent;
-import com.example.demo.entity.event.SynCustomEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,8 +30,8 @@ public class AsyncEventController {
 
     @RequestMapping("/asyn/hello")
     public String hello(){
-        System.out.println("事件开始发布消息："+System.currentTimeMillis()+"线程id"+Thread.currentThread().getId());
-        applicationContext.publishEvent(new AsynCustomEvent(this,"嘿嘿嘿！"));
+//        System.out.println("事件开始发布消息："+System.currentTimeMillis()+"线程id"+Thread.currentThread().getId());
+//        applicationContext.publishEvent(new AsynCustomEvent(this,"嘿嘿嘿！"));
         return "success";
     }
 }
