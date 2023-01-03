@@ -47,8 +47,8 @@ public class SortApplicationTests {
     /**
      * 功能描述 : 冒泡排序 :假如数组长度是 n
      *           冒泡排序 ：
-     *                    循环n-1 次
-     *                   每一次内for循环 将最大的数放到最后面，
+     *                    外循环n-1 次
+     *                   每一次内for循环 将最大的数放到最后面（相对于前面数的最后，不一定是真正的最后，第一次外循环是放到最后）
      * @author guoyiguang
      * @date 2023/1/3
      * @param
