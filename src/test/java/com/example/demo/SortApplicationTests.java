@@ -77,7 +77,7 @@ public class SortApplicationTests {
             // 一个for 内循环 全部执行完，会产生一个最大值
             // 要所有元素排序，需要执行 n-1 次
             for(int i=0;i < arr.length-1 ;i++){
-                // 定义一个临时变量 存放 较大值
+                // 定义一个临时变量 存放 较大值(数组内两个元素互换位置一般需要引入一个临时变量)
                 int tem ;
                 // 相邻的两个元素两两比对，产生一个最大值
                 if(arr[i] > arr[i+1]  ){
