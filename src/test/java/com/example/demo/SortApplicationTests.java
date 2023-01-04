@@ -37,7 +37,10 @@ public class SortApplicationTests {
     @Test
     public void testLocalDateTime() {
 
-        bubbleSort();
+        //bubbleSort();
+
+        // 插入排序
+        insertSort();
 
 
     }
@@ -81,7 +84,6 @@ public class SortApplicationTests {
         }
 
 
-
         System.out.println(arr);
         System.out.println(arr);
 
@@ -121,6 +123,74 @@ public class SortApplicationTests {
         System.out.println(arr);
 
 
+
+    }
+
+
+
+    /**
+     * 功能描述  插入排序
+     *
+     * 数组中的数据分为两个区间： 未排序区间和已排序区间
+       初始已排序区间只有一个元素，就是数组中的第一个元素。
+
+       插入算法的核心思想：
+     * 取未排序区间中的元素，在已排序区间中找合适的插入位置将其插入（未排的元素大于左边紧挨着的元素即可），并保证已排序区间数据一直有
+     * 序。重复这个过程，直到未排序区间中元素为空，算法结束。
+     * @author guoyiguang
+     * @date 2023/1/3
+     * @param
+     * @return
+     */
+    public  void insertSort(){
+
+
+        // 特殊情况
+        // int[] arr = {44, 3};
+        // int[] arr = {44, 3, 38,5};
+//      第一次 for 循环：    44,  3,38,5   --->   (3),44,   38,5  （已排序：3,44 ；未排 38, 5 ）
+//      第二次 for 循环：    3,44,   38,5   ---> 3,(38),44,     5  （已排序：3,  ,44 ；未排   5 ）
+//      第三次 for 循环：    3,38,44,  5    ---> 3,(5)，38,44       （已排序：3,5，38，44 ；未排  0 ）  需要循环  n-1次
+
+        //int[] arr = {5,4, 3, 2, 1};
+//        第一次 for   5,   4, 3, 2, 1 ---> (4),5,        3, 2, 1
+  //      第二次 for   (4),5,    3, 2, 1 ---> (3),(4),5,     2, 1
+
+
+         //int[] arr = { 44, 3, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48};
+         //int[] arr = { 44, 3, 38, 5, 47, 15};
+        int[] arr={10,6,9,3,5};
+
+        //未排序区间
+        for(int m = 1;m <= arr.length-1;m++){
+            // 临时变量存储 相对的 定值
+            int value = arr[m];
+
+            // 已排序区间
+            // 当前元素和 前面元素依次比较
+            int n =m-1 ;
+            for(; n >= 0 ;n--){
+                // value 未排序的当前元素；arr[n] 已排区间元素
+                if( arr[n] > value){
+                    // 将前面元素 大于 当前元素的 下标 右移
+                    arr[n+1] = arr[n] ;
+
+                }else{
+                    //  当前元素 开始大于 有序区间的 值
+                    break;
+                }
+
+            }
+
+            // 寻找插入的位置
+            arr[n+1] = value  ;
+
+        }
+
+
+
+        System.out.println(arr) ;
+        System.out.println(arr) ;
 
     }
 
