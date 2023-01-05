@@ -122,11 +122,8 @@ public class SortApplicationTests {
             }
         }
 
-
-
         System.out.println(arr);
         System.out.println(arr);
-
 
 
     }
