@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
+
 
 /**
  * 功能描述 : 排序算法
@@ -44,6 +46,9 @@ public class SortApplicationTests {
 
         // 选择排序
         // selectionSort();
+
+        // 合并有序数组
+        mergeSortArrayTest();
 
 
 
@@ -258,9 +263,70 @@ public class SortApplicationTests {
 
     }
 
-        System.out.println(arr) ;
-        System.out.println(arr) ;
+        System.out.println("--------------------start------------------");
+        Arrays.toString(arr);
+        System.out.println("--------------------end------------------");
+    }
 
+
+
+
+    /**
+     *
+     * 功能描述：合并两个有序序列
+     *        将两个有序的数组合并 成一个有序的大数组(归并排序中合并的思想)
+     *
+     *
+     * @author guoyiguang
+     * @date 2023/1/3
+     * @param
+     * @return
+     */
+    public  void mergeSortArrayTest(){
+
+         int[] aArray = {1, 3, 5,7,9,11}; // 11
+         int[] bArray = {2, 4, 6,8,10};
+
+        int[] combineArray = new int[aArray.length+bArray.length];
+
+
+        int aIndex = 0;
+        int bIndex = 0;
+
+
+        for(int i = 0 ;i <=(aArray.length+bArray.length-1) ;i++){
+
+            // aArray 中  a 和   bArray 中 b 下标的最小值
+
+            //  aArray 数组和  bArray 数组 里元素 都没有 用尽
+            if(aIndex <= aArray.length-1 &&  bIndex <= bArray.length-1){
+                if(aArray[aIndex] < bArray[bIndex]){
+                    combineArray[i] =  aArray[aIndex];
+                    aIndex++;
+                }else{
+                    combineArray[i] =  bArray[bIndex];
+                    bIndex++;
+                }
+                //  aArray 数组 没有耗尽， bArray 耗尽
+            }else if(aIndex <= aArray.length-1 &&  bIndex > bArray.length-1){
+                combineArray[i] =  aArray[aIndex];
+                aIndex++;
+
+                //  aArray 数组  耗尽， bArray 没有耗尽
+            }else if(aIndex > aArray.length-1 &&  bIndex <= bArray.length-1){
+                combineArray[i] =  bArray[bIndex];
+                bIndex++;
+            }else{
+                // 同时耗尽，不管
+            }
+
+
+        }
+
+
+        System.out.println("--------------------start------------------");
+        Arrays.toString(combineArray);
+        System.out.println("--------------------end------------------");
     }
 
 
