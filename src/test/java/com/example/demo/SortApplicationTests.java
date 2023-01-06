@@ -51,10 +51,14 @@ public class SortApplicationTests {
        // mergeSortArrayTest();
 
 
-        // 归并排序
-        mergeSort();
+        // 归并排序  TODO 目前的写法有问题
+       // mergeSort();
 
-
+        // 快速排序(用到了双指针算法，不需要开辟新的内存空间)
+        int[] array = {11,4,8,2,10 };
+        int[] ints = quickSort(array, 0, 4);
+        System.out.println(Arrays.toString(ints));
+        System.out.println(Arrays.toString(ints));
 
 
     }
@@ -453,6 +457,67 @@ public class SortApplicationTests {
         }
 
         return combineArray ;
+
+    }
+
+
+    /**
+     * 功能描述 : 快速排序(重复性操作 且有终止条件就可以考虑用 递归)
+     *
+     * 用到了：双指针算法（不需要开辟额外空间）
+     *
+     * @author guoyiguang
+     * @date 2023/1/6
+     * @param
+     * @return
+     */
+    public int[]  quickSort(int[] array ,int  start ,int end){
+        //                11,4,8,2,10     以 8 为分区点
+        //                11,4,   8,   2,10
+
+        //                2,4,   8,   11,10
+
+        //  i 从 4 开始向右移动 ,同时 j 从 10 开始向左移动，i 小于8 的就继续右移动 ， j 大于 8 继续左移动
+
+        //  当 i 大于 8 停止，j 小于 8 j也停止，然后这两个元素  互换位置
+
+        if(start == end ){
+            return array;
+        }
+
+
+        int middle = (start+end)/2 ;
+
+
+        int middleValue = array[middle];
+
+        // middle  = 3
+        //   3,4  value 11 ,10
+        for(int i = start ; i <= middle ; i++){
+            if(array[i] >= middleValue){
+                //
+                for (int j = end ; j >= middle ; j--){
+                    if(array[j] < middleValue){
+                        // 数组两元素交换位置
+                        int tem  =  array[i] ;
+                        array[i] = array[j];
+                        array[j] = tem ;
+                    }
+                }
+            }
+        }
+
+
+       // 左边
+        quickSort(array,start,middle);
+        // 右边
+        quickSort(array,middle+1,end);
+
+        return array;
+
+
+
+
 
     }
 
