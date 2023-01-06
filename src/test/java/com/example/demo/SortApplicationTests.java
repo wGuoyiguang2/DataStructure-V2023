@@ -465,6 +465,7 @@ public class SortApplicationTests {
      * 功能描述 : 快速排序(重复性操作 且有终止条件就可以考虑用 递归)
      *
      * 用到了：双指针算法（不需要开辟额外空间）
+     *       难点： 两个元素之间互换位置（用了双指针算法）
      *
      * @author guoyiguang
      * @date 2023/1/6
