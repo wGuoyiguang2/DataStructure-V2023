@@ -48,7 +48,11 @@ public class SortApplicationTests {
         // selectionSort();
 
         // 合并有序数组
-        mergeSortArrayTest();
+       // mergeSortArrayTest();
+
+
+        // 归并排序
+        mergeSort();
 
 
 
@@ -276,7 +280,7 @@ public class SortApplicationTests {
      * 功能描述：合并两个有序序列
      *        将两个有序的数组合并 成一个有序的大数组(归并排序中合并的思想)
      *
-     *        思路：
+     *        思路 ：
      *             将 aArray 和   bArray 数组的元素两个两个比较，选出最小的
      *             同时最小值 所在数组的下标右移动一个，继续比较
      *
@@ -286,9 +290,6 @@ public class SortApplicationTests {
      *          aArray 的  1 和  bArray的 2 比较 ，1 小 ，右移动1位，3和2比较，2小， bArray 下标移动一位，4 和 3 比较
      *
      *          值小的 所在数组下标 要+1 ,继续比较，整个过程中，注意下标越界问题
-     *
-     *
-     *
      *
      * @author guoyiguang
      * @date 2023/1/3
@@ -302,8 +303,10 @@ public class SortApplicationTests {
 
         int[] combineArray = new int[aArray.length+bArray.length];
 
-
+        // a 数组下标变量
         int aIndex = 0;
+
+        // b 数组下标变量
         int bIndex = 0;
 
 
@@ -341,6 +344,118 @@ public class SortApplicationTests {
         Arrays.toString(combineArray);
         System.out.println("--------------------end------------------");
     }
+
+
+
+    /**
+     * 功能描述 : 归并排序
+     *          分治思想和递归
+     *
+     *
+     *          分支思想：
+     *          将一个数组一分为二（具体分几次不清楚，但是 分成 数组里元素只有一个，是 重复性的计算可以考虑递归），
+     *          将这两个数组分别排序，
+     *          最后将结果合并
+     *
+     * @author guoyiguang
+     * @date 2023/1/5
+     * @param
+     * @return
+     */
+    public void  mergeSort(){
+        int[] array = { 44, 3, 38,5};
+        splitArray(array);
+
+    }
+
+
+    /**
+     * 功能描述 : 有问题 ， 待看
+     * @author guoyiguang
+     * @date 2023/1/6
+     * @param
+     * @return
+     */
+    public int[] splitArray(int[] array){
+//        if(array.length == 1 ){
+//            return  array ;
+//        }
+//        //   array 最少两个元素
+//        int  middle  =  (array.length-1)/2;
+//
+//        //  int mid = (start + end) / 2  ;
+//
+//
+//
+//
+//        // 未排序的左部分
+//        int [] left =Arrays.copyOfRange(array, 0 , middle );
+//        // 未排序的右部分
+//        int [] right =Arrays.copyOfRange(array, middle, array.length );
+//        System.out.println("a");
+//
+//        // 拆分左半部分
+//        left = splitArray(left);
+//
+//        // 拆分右半部分
+//        right = splitArray(right);
+//
+//        int[] ints = mergeArray(left, right);
+//        System.out.println("--------------------start------------------");
+//        Arrays.toString(ints);
+//        System.out.println("--------------------end------------------");
+
+
+    //    return ints;
+        return null;
+
+
+    }
+
+
+    public int[]  mergeArray(int[] aArray,int[] bArray){
+        int[] combineArray = new int[aArray.length+bArray.length];
+
+        // a 数组下标变量
+        int aIndex = 0;
+
+        // b 数组下标变量
+        int bIndex = 0;
+
+
+        for(int i = 0 ;i <=(aArray.length+bArray.length-1) ;i++){
+
+            // aArray 中  a 和   bArray 中 b 下标的最小值
+
+            //  aArray 数组和  bArray 数组 里元素 都没有 用尽
+            if(aIndex <= aArray.length-1 &&  bIndex <= bArray.length-1){
+                if(aArray[aIndex] < bArray[bIndex]){
+                    combineArray[i] =  aArray[aIndex];
+                    aIndex++;
+                }else{
+                    combineArray[i] =  bArray[bIndex];
+                    bIndex++;
+                }
+                //  aArray 数组 没有耗尽， bArray 耗尽
+            }else if(aIndex <= aArray.length-1 &&  bIndex > bArray.length-1){
+                combineArray[i] =  aArray[aIndex];
+                aIndex++;
+
+                //  aArray 数组  耗尽， bArray 没有耗尽
+            }else if(aIndex > aArray.length-1 &&  bIndex <= bArray.length-1){
+                combineArray[i] =  bArray[bIndex];
+                bIndex++;
+            }else{
+                // 同时耗尽，不管
+            }
+
+
+        }
+
+        return combineArray ;
+
+    }
+
 
 
 }
