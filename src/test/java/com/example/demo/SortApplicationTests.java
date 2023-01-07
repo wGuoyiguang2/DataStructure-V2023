@@ -64,8 +64,13 @@ public class SortApplicationTests {
         // 折半查找(二分查找) ：前提：数据是已经提前排好顺序的
 
         int[] arraybinarySearch = {1,3,5,7,9,10 };
-        int binarySearchIndex = binarySearch(arraybinarySearch, 0, 6, 10);
-        System.out.println(binarySearchIndex);
+//        int binarySearchIndex = binarySearch(arraybinarySearch, 0, 6, 10);
+//        System.out.println(binarySearchIndex);
+
+
+        // 非递归 折半查找
+        int binarySearchNoRecursionInt = binarySearchNoRecursion(arraybinarySearch, 10);
+        System.out.println(binarySearchNoRecursionInt);
 
 
     }
@@ -556,8 +561,6 @@ public class SortApplicationTests {
         //  1,3,5,7,9
 
 
-
-
         // 递归终止条件  ①
         if(start == end ){
             // 和目标值 target 比较，一样，则返回下标，否则返回 -1
@@ -601,15 +604,55 @@ public class SortApplicationTests {
 
 
 
+    /**
+     * 功能描述: 非递归二分查找
+     * @author guoyiguang
+     * @date 2023/1/7
+     * @param
+     * @return
+     */
+    public int binarySearchNoRecursion(int[] array,int target){
+        // 1,3 ,5 ,7,9
 
-        /**
-         * 功能描述 : 线性排序 ：桶排序，计数排序和基数排序（时间复杂度 都是 O(n)）
-         *
-         * 之所以能做到线性的时间复杂度，主要是因为它们都不是基于比较的排序算法，排序的过程不涉及元素之间的比较操作。
-         * @author guoyiguang
-         * @date 2023/1/7
-         * @param
-         * @return
-         */
+        int low = 0;
+        int middle = ( array.length-1)/2;
+        int max = array.length-1;
+
+        //有终止条件且不知道循环几次可以考虑  while 循环
+        while(low <= max){
+            // 终止条件
+            if(array[middle] == target){
+                // 结束 while 循环
+                return middle;
+            }else if (array[middle] > target){
+                // target 在  middle 左边
+                max = middle-1;
+                middle = (low+max)/2;
+            }else{
+                low = middle+1;
+                middle = (low+max)/2;
+            }
+
+        }
+
+        return -1;
+
+    }
+
+
+
+
+
+
+
+    /**
+     * 功能描述 : 线性排序 ：桶排序，计数排序和基数排序（时间复杂度 都是 O(n)）
+     *
+     * 之所以能做到线性的时间复杂度，主要是因为它们都不是基于比较的排序算法，排序的过程不涉及元素之间的比较操作。
+     * @author guoyiguang
+     * @date 2023/1/7
+     * @param
+     * @return
+     */
 
 }
