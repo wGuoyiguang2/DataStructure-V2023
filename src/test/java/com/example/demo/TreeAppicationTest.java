@@ -6,6 +6,9 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /**
  *
@@ -48,11 +51,13 @@ public class TreeAppicationTest {
 
         //TreeNode tree = getTree();
         TreeNode tree = getTreeV2();
-        preOrder(tree);
+        //preOrder(tree);
 
         //inOrder(tree);
 
         //afterOrder(tree);
+
+        layer(tree);
 
 
     }
@@ -259,6 +264,58 @@ public class TreeAppicationTest {
         System.out.println("--------------------------------后序  start -----------------------------");
         System.out.println(root.getData());
         System.out.println("--------------------------------后序  end -----------------------------");
+
+
+    }
+
+    /**
+     * 功能描述 ：按层遍历（即逐层地，从左到右访问所有节点）
+     *
+     *
+     *
+     * @author guoyiguang
+     *
+     *
+     *                   1
+     *
+     *               2        3       --->  1 2 3
+     *
+     **********************************************************************************
+     *
+     *                      3
+     *
+     *                1           4
+     *
+     *                   2     5     6   --->    3 1 4 2 5 6
+     * @date 2023/1/9
+     * @param
+     * @return
+     */
+    public void  layer(TreeNode root){
+
+        Queue<TreeNode> queue=new LinkedList<>();
+        queue.add(root);
+
+        // 不知道循环次数
+        while(!queue.isEmpty()){
+
+            // 出队列
+            TreeNode poll = queue.poll();
+
+            System.out.println("---------------------层级遍历 start------------");
+            System.out.println(poll.getData());
+            System.out.println("---------------------层级遍历  end------------");
+
+            // 左节点 入队列
+            if(null!= poll.getLeft()){
+                queue.add(poll.getLeft());
+            }
+            // 右节点 入队列
+            if(null!= poll.getRight()){
+                queue.add(poll.getRight());
+            }
+        }
+
 
 
     }

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.entity.tree.TreeNode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -156,6 +157,146 @@ public class RecursionAppicationTest {
 
 
     }
+
+
+    /**
+     * 功能描述 : 前序遍历（首先输出自己）：(先输出自己，然后输出左右节点)
+     *
+     *        2
+     *
+     *   1        3
+     *
+     *               4
+     *
+     *****************************************************
+     *              3
+     *
+     *         1           4
+     *
+     *             2   5        6   --->    3  1 2  4 5 6
+     * @author guoyiguang
+     * @date 2023/1/9
+     * @param
+     * @return
+     */
+    public void preOrder(TreeNode root){
+
+        //   终止条件： 根节点为null 或者左 节点或者 右节点为 null
+        if(null == root){
+            return ;
+        }
+
+        // ① 输出自己
+        System.out.println("-----------------------------前序 start----------------------");
+        System.out.println(root.getData());
+        System.out.println("-----------------------------前序 end----------------------");
+
+
+        // 二 重复逻辑
+
+        // ① 输出左节点
+        preOrder(root.getLeft());
+        // ② 输出右节点
+        preOrder(root.getRight());
+
+    }
+
+
+    /**
+     * 功能描述 : 中序遍历（中间输出自己）：(先输出左节点，然后输出自己，最后输出右节点 )
+     *
+     *
+     *     2
+     *
+     * 1        3
+     *
+     ***************************************************************************
+     *
+     *         3
+     *
+     *   1          4
+     *
+     *      2     5    6   --->    1  2  3   5  4 6
+     *
+     * @author guoyiguang
+     * @date 2023/1/9
+     * @param
+     * @return
+     */
+    public void inOrder(TreeNode root){
+
+
+        // 终止条件
+        if(null == root){
+            return ;
+        }
+
+
+        // 打印左节点
+        inOrder(root.getLeft());
+
+        // 打印自己
+        System.out.println("--------------------------------中序  start -----------------------------");
+        System.out.println(root.getData());
+        System.out.println("--------------------------------中序  end -----------------------------");
+
+
+        // 打印右节点
+        inOrder(root.getRight());
+
+
+    }
+
+    /**
+     * 功能描述 : 后序遍历（最后输出自己）：(先输出左节点，然后输出右节点，最后输出自己 )
+     *
+     *            1
+     *
+     *        2        3       --->  2  3  1
+     *
+     *********************************************************************************
+     *
+     *                3
+     *
+     *          1          4
+     *
+     *             2     5    6   --->    2 1   5  4  6  3
+     * @author guoyiguang
+     * @date 2023/1/9
+     * @param
+     * @return
+     */
+    public void afterOrder(TreeNode root){
+
+
+        // 终止条件
+        if(null == root){
+            return ;
+        }
+
+
+        // 打印左节点
+        inOrder(root.getLeft());
+
+        // 打印右节点
+        inOrder(root.getRight());
+
+        // 打印自己
+        System.out.println("--------------------------------后序  start -----------------------------");
+        System.out.println(root.getData());
+        System.out.println("--------------------------------后序  end -----------------------------");
+
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 
