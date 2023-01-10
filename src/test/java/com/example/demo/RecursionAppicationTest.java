@@ -1,10 +1,16 @@
 package com.example.demo;
 
+import com.example.demo.entity.Question;
 import com.example.demo.entity.tree.TreeNode;
+import org.apache.tomcat.util.threads.TaskQueue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
 
 /**
  * @author guoyiguang
@@ -43,6 +49,10 @@ public class RecursionAppicationTest {
 //        int fibonacciSequenceInt = fibonacciSequence(5);
 //        int lucasSequenceInt=   lucasSequence(5);
         System.out.println();
+        ArrayDeque queue = new ArrayDeque();
+
+
+
 
 
     }
