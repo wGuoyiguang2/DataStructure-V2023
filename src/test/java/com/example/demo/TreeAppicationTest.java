@@ -296,7 +296,7 @@ public class TreeAppicationTest {
         Queue<TreeNode> queue=new LinkedList<>();
         queue.add(root);
 
-        // 不知道循环次数
+        // 不知道循环次数,可以考虑用  while
         while(!queue.isEmpty()){
 
             // 出队列
