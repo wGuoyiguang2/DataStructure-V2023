@@ -53,7 +53,6 @@ import static cn.hutool.core.io.IoUtil.DEFAULT_BUFFER_SIZE;
 public class DemoApplicationTests {
 
 
-    private final PathMatcher pathMarch = new AntPathMatcher();
 
 
     ExecutorService executor = Executors.newCachedThreadPool();
@@ -2049,9 +2048,6 @@ public class DemoApplicationTests {
         System.out.println("");
 
     }
-
-
-
 
 
 
