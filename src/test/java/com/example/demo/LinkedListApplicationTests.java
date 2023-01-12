@@ -28,10 +28,11 @@ public class LinkedListApplicationTests {
 
 
     /**
-     *  
+     *  遍历一个链表
+     *  插入，删除一个元素
      */
     @Test
-    public void testLocalDateTime() {
+    public void ergodic() {
 
         MyNode myNode1 = new MyNode();
         myNode1.setValue("myNode1");
@@ -55,10 +56,29 @@ public class LinkedListApplicationTests {
         myNode4.setNext(myNode3);
 
 
+
+        // 遍历一个链表
+        // myNode1 ---> myNode2 --->  myNode4 --->  myNode3
+
+        //  tem
         MyNode tem = myNode1;
-        while(tem.getNext() == null){
+        // 不知道循环几次，但是知道 终止条件
+        while(tem != null){
             System.out.println(tem);
             tem  = tem.getNext();
+        }
+
+        //  不知道循环几次，但是知道 终止条件(等效  于  while)
+        System.out.println("for 循环  遍历  链表");
+        MyNode temFor = myNode1;
+        for(;;){
+            if(null != temFor){
+                System.out.println(temFor);
+                temFor  = temFor.getNext();
+            }else{
+                break;
+            }
+
         }
 
 
