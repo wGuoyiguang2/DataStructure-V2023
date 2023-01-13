@@ -12,10 +12,14 @@ package com.example.demo;
 
 import com.example.demo.entity.ListNode;
 import com.example.demo.entity.link.MyNode;
+import org.apache.tomcat.jni.Mmap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -63,6 +67,41 @@ public class LinkedListApplicationTests {
         insertElementToLink(myNode1,myNode2,myNode3,insertNode);
 
 
+
+
+
+
+
+    }
+
+
+    @Test
+    public void  interviewTest() {
+
+        MyNode myNode1 = new MyNode();
+        myNode1.setValue("myNode1");
+        MyNode myNode2 = new MyNode();
+        myNode2.setValue("myNode2");
+        MyNode myNode3 = new MyNode();
+        myNode3.setValue("myNode3");
+
+        MyNode myNode4 = new MyNode();
+        myNode4.setValue("myNode4");
+
+        //  形成链
+        myNode1.setNext(myNode2);
+        myNode2.setNext(myNode3);
+        myNode3.setNext(myNode4);
+
+
+        MyNode myNode1Second = new MyNode();
+        myNode1Second.setValue("myNode1_Second");
+        myNode1Second.setNext(myNode4);
+
+        // 两个链表找出第一个一样的node
+        //MyNode myNode = chooseFirstCommonNodeV1(myNode1,myNode1Second);
+        MyNode myNode = chooseFirstCommonNodeV2(myNode1,myNode1Second);
+        System.out.println(myNode);
 
 
     }
@@ -289,6 +328,8 @@ public class LinkedListApplicationTests {
 
 
 
+
+
     }
 
 
@@ -361,6 +402,100 @@ public class LinkedListApplicationTests {
         return prev;
 
     }
+
+
+
+
+    /**
+     ***************************************************高频面试题 start**********************************************
+     */
+
+
+    /**
+     *
+     * 功能描述：  两个链表找出 第一个公共节点
+     *          链表① ：A  B  C  D  E  F
+     *
+     *          链表② ：G  H  C  D  E  F
+     *          考察点：链表的遍历
+     *          难度系数： 2星
+     *          思路：依次遍历 链表① ，然后  在 链表② 找到 和  链表① 一样的元素，然后返回
+     * @author guoyiguang
+     * @date 2023/1/12
+     * @param
+     * @return
+     */
+    // 此方法时间复杂度高，不推荐
+    public MyNode chooseFirstCommonNodeV1(MyNode firstNode1,MyNode firstNode2){
+
+        // 返回
+        if(null == firstNode1 || null == firstNode2){
+            return null;
+        }
+
+        MyNode temFirst = firstNode1;
+        while(temFirst != null){
+
+            MyNode temSecond = firstNode2;
+            while(temSecond != null){
+                if(temFirst == temSecond){
+                    return temFirst;
+                }
+                temSecond = temSecond.getNext();
+            }
+            // firstNode1 链表 的下一个节点
+            temFirst = temFirst.getNext();
+        }
+
+        return null;
+
+
+
+
+
+    }
+
+
+    // HashMap or 其他集合：思路： 将一个链表的 元素放到 一个map（其他集合里也行），遍历另一个链表，如果 元素在集合里，返回这个元素即可
+    public MyNode chooseFirstCommonNodeV2(MyNode firstNode1,MyNode firstNode2){
+
+        // 返回
+        if(null == firstNode1 || null == firstNode2){
+            return null;
+        }
+        Map firstLinkedMap = new HashMap();
+
+        MyNode temFirst = firstNode1;
+        while(temFirst != null){
+            firstLinkedMap.put(temFirst,temFirst);
+            // firstNode1 链表 的下一个节点
+            temFirst = temFirst.getNext();
+        }
+
+        MyNode temSecond = firstNode2;
+        while(temSecond != null){
+            //  也可以用  Set ，ArrayList集合  ，然后contains 判断一下，但是  时间复杂度不如 map
+            if(firstLinkedMap.containsKey(temSecond)){
+                 return temSecond;
+            }
+            // firstNode2 链表 的下一个节点
+            temSecond = temSecond.getNext();
+        }
+
+        return null;
+
+
+
+
+
+    }
+
+
+
+    /**
+     ***************************************************高频面试题 end**********************************************
+     */
+
 
 
 }
