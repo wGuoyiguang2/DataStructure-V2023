@@ -49,7 +49,18 @@ public class LinkedListApplicationTests {
         myNode2.setNext(myNode3);
         myNode3.setNext(myNode4);
 
-        deleteElementToLink(myNode1,myNode4);
+        //deleteElementToLink(myNode1,myNode4);
+
+        // 插入元素
+
+        MyNode insertNode = new MyNode();
+        insertNode.setValue("myNode5_insert");
+        // 首位插入
+        //insertElementToLink(myNode1,null,myNode2,insertNode);
+        //尾结点插入
+        //insertElementToLink(myNode1,myNode4,null,insertNode);
+        // 2 和 3 中间插入
+        insertElementToLink(myNode1,myNode2,myNode3,insertNode);
 
 
 
@@ -121,34 +132,64 @@ public class LinkedListApplicationTests {
 
     /**
      * 功能描述：  链表插入一个元素
+     *
+     *          A---> B--->  C
+     *          ① A 前面插入 D   (D.setNext(A))
+     *          ② A 和  B 之间插入D (A.setNext(D) ;D.setNext(B) )
+     *          ③ C 后插入 D （c.next(D)）
+     *
      * @author guoyiguang
      * @date 2023/1/12
      * @param
      * @return
      */
-    @Test
-    public void insertElementToLink() {
+    public void insertElementToLink(MyNode firstNode,MyNode preNode,MyNode postNode,MyNode insertNode) {
+        // 首位插入
+        if(null == preNode){
+            insertNode.setNext(firstNode);
+            //  firstNode 引用指向 堆 的  insertNode 对象
+            firstNode = insertNode;
+            // 中间插入
+        }else if(null != preNode && null!= postNode ){
+            preNode.setNext(insertNode);
+            insertNode.setNext(postNode);
+            // 末尾插入
+        }else if(null == postNode){
+            // 找出 尾结点
+            MyNode tem = firstNode ;
+            MyNode lastNode = firstNode ;
+            while(tem != null){
+                if(null == tem.getNext()){
+                    lastNode = tem;
+                    // 终止循环
+                    break;
+                }
+                tem = tem.getNext();
 
-        MyNode myNode1 = new MyNode();
-        myNode1.setValue("myNode1");
-        MyNode myNode2 = new MyNode();
-        myNode2.setValue("myNode2");
-        MyNode myNode3 = new MyNode();
-        myNode3.setValue("myNode3");
+            }
 
-        //  形成链
-        myNode1.setNext(myNode2);
-        myNode2.setNext(myNode3);
-        // 这一步可以省去不写
-        myNode3.setNext(null);
+            lastNode.setNext(insertNode);
+            // 可以不写
+            insertNode.setNext(null);
 
-        // 在 myNode2 和  myNode3 直接插入 myNode4
-        MyNode myNode4 = new MyNode();
-        myNode4.setValue("myNode4");
 
-        myNode2.setNext(myNode4);
+        }
 
-        myNode4.setNext(myNode3);
+
+
+        // 遍历  链表
+        MyNode  tem2 =  firstNode;
+        System.out.println("遍历插入元素后的链表");
+        while(null != tem2){
+            System.out.println(tem2);
+            //   tem  指向  tem 的 next 对象
+            tem2 = tem2.getNext();//  tem.getNext() 这个引用 指向 堆的一个对象Object1 ，此条语句是将 tem 这个引用 指向 Object1
+
+        }
+
+
+
+
 
 
 
@@ -171,7 +212,7 @@ public class LinkedListApplicationTests {
      *          B
      *     ② 要删除 A 元素
      *        A.next(null)
-     *        首节点变成B TODO 怎么让B变成首节点
+     *        首节点变成B TODO 怎么让B变成首节点 (只需要将 firstNode 引用指向 堆 的 B 对象)
      *
      *      ③ 要删除 C 元素
      *        B.next(null)
