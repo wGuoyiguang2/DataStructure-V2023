@@ -18,8 +18,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -487,6 +486,33 @@ public class LinkedListApplicationTests {
 
 
 
+
+    }
+
+
+    /**
+     * 功能描述: 合并两个有序链表
+     * LeetCode21 将两个升序链表合并为⼀个新的升序链表并返回，新链表是通过拼接给定的两个链表的所有节点组成的。
+
+     *  链表A ： 1  3  5 7
+     *
+     *  链表B ： 2  4  6 8
+     *
+     *  思路①：链表 A 和  链表 B 的各个元素比较，最小值 是 新链表 的下一个节点，继续遍历，直到 遍历完（时间复杂度高）
+     *  思路②：栈/队列  将 链表A 和  链表B 分别放到 两个 队列里，然后  同时出队，两个元素比较  ，最小值 是 新链表 的下一个节点，继续出队列
+     *  思路③：就是将⼀个链表结点拆下来，逐个合并到另外⼀个对应位置上去（本质还是链表的插入）
+     *
+     * @author guoyiguang
+     * @date 2023/1/13
+     * @param
+     * @return
+     */
+    public MyNode combineSortedLink(MyNode firstNode1,MyNode firstNode2){
+       // TODO
+
+
+
+        return null;
 
     }
 
