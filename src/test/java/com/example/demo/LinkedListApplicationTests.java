@@ -49,7 +49,7 @@ public class LinkedListApplicationTests {
         myNode2.setNext(myNode3);
         myNode3.setNext(myNode4);
 
-        deleteElementToLink(myNode1,myNode1);
+        deleteElementToLink(myNode1,myNode4);
 
 
 
@@ -157,17 +157,25 @@ public class LinkedListApplicationTests {
 
 
     /**
-     *   TODO :  第一个和最后一个需要处理
+     *
      * 功能描述：  链表 删除 一个元素
      *
      *
      *
-     * 思路：假如链表 A---> B ---> C , 要删除 B 元素
+     * 思路：假如链表 A---> B ---> C ,
+     *      ① 要删除 B 元素
      *     先在链表找到B元素的前置元素A和后置元素c
      *     然后 A.next(C) ,B.next(null)
      *     最后
      *       A ---> C
      *          B
+     *     ② 要删除 A 元素
+     *        A.next(null)
+     *        首节点变成B TODO 怎么让B变成首节点
+     *
+     *      ③ 要删除 C 元素
+     *        B.next(null)
+     *
      *
      * @author guoyiguang
      * @date 2023/1/12
@@ -205,8 +213,20 @@ public class LinkedListApplicationTests {
         System.out.println("--");
 
         // 改变 引用
-        preposition.setNext(postposition);
-        deleteNode.setNext(null);
+        if(preposition == firstNode){
+            // 说明删除的是 firstNode
+            deleteNode.setNext(null);
+            // 将（堆）第二个 node  指向 secondNode
+            firstNode = postposition ;
+
+            // 删除的是最后一个元素(next 是 null 就是最后一个)
+        }else if(null == deleteNode.getNext()){
+            preposition.setNext(postposition);
+        } else{
+            preposition.setNext(postposition);
+            deleteNode.setNext(null);
+        }
+
 
         // 遍历链表
         MyNode  tem2 =  firstNode;
