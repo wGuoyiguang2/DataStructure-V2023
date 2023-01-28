@@ -22,4 +22,5 @@ public class MyNode {
                 "value='" + value +
                 '}';
     }
+
 }

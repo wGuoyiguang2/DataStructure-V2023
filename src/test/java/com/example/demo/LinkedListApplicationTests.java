@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -68,7 +69,10 @@ public class LinkedListApplicationTests {
 
         //deleteAndInsertList();
 
-        rotate();
+        //rotate();
+       // delNodeByValue();
+
+        getLastNumNode();
 
 
 
@@ -775,6 +779,72 @@ public class LinkedListApplicationTests {
 
 
      /**
+      * 功能描述  找倒数第k个元素（双指针法）
+      *   示例1：
+      *   输⼊：head = [1,2,3,4,5], n = 2
+      *   输出：[4,5]
+      *   思路： 定义 两个指针 fastNode ，slowNode
+      *         fastNode 先走 k 个位置，然后 fastNode ，slowNode  一起走，当  链表 遍历完 ， slowNode 所在位置刚好就是 目标节点位置
+      * @author guoyiguang
+      * @date 2023/1/29
+      * @param
+      * @return
+      */
+     public void getLastNumNode(){
+         MyNode firstNode= new MyNode();
+         firstNode.setValue("1");
+
+         MyNode firstNode2= new MyNode();
+         firstNode2.setValue("2");
+
+
+         MyNode firstNode3= new MyNode();
+         firstNode3.setValue("3");
+
+
+         MyNode firstNode4= new MyNode();
+         firstNode4.setValue("4");
+
+
+         MyNode firstNode5= new MyNode();
+         firstNode5.setValue("5");
+         //
+         firstNode.setNext(firstNode2);
+         firstNode2.setNext(firstNode3);
+         firstNode3.setNext(firstNode4);
+         firstNode4.setNext(firstNode5);
+
+
+
+         int k = 2;
+
+
+         MyNode fastNode= firstNode;
+         MyNode slowNode= firstNode;
+
+         for(int i =1 ;i<=k;i++){
+             fastNode = fastNode.getNext();
+         }
+
+
+
+         // 遍历链表(从fastNode 处开始遍历)
+         MyNode temNode= fastNode;
+         while(null != temNode){
+             slowNode = slowNode.getNext();
+             temNode = temNode.getNext();
+
+         }
+
+         // [4,5]
+         System.out.println(slowNode);
+         System.out.println(slowNode);
+
+
+     }
+
+
+     /**
       * 功能描述 :  旋转链表
       *
       * Leetcode61.先看题⽬要求：给你⼀个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。
@@ -859,11 +929,133 @@ public class LinkedListApplicationTests {
          System.out.println(secondLinkHead);
 
 
-
-
-
-
      }
+
+     /**
+      * 功能描述 :  如何判断 是否有环  TODO 五星（重要）
+      *
+      *     判断是否有环，最容易的⽅法是使⽤Hash，遍历的时候将元素放⼊到map中，如果有环⼀定会发⽣碰撞。发⽣碰
+      * 撞的位置也就是⼊⼝的位置，因此这个题so easy。如果在⼯程中，我们这么做就OK了，
+      * @author guoyiguang
+      * @date 2023/1/28
+      * @param
+      * @return
+      */
+     public MyNode detectCycle(MyNode head) {
+         MyNode pos = head;
+         Set<MyNode> visited = new HashSet<MyNode>();
+         while (pos != null) {
+             if (visited.contains(pos)) {
+                 // 用 return 结束  while 循环
+                 return pos ;
+             } else {
+                 visited.add(pos);
+             }
+             pos = pos.getNext();
+         }
+         return null;
+     }
+
+
+
+    /**
+     ********************************************** 删除链表 元素 专题 **********************************************
+     *
+     */
+
+
+    /**
+     * 功能描述 :
+     *  LeetCode 203：
+     *  给你⼀个链表的头节点 head 和⼀个整数 val ，请你删除链表中所有满⾜ Node.val == val 的节点，并返回新的头节点
+     *
+     * 示例1：
+     *         输⼊：head = [1,2,6,3,4,5,6], val = 6
+     *         输出：[1,2,3,4,5]
+     *         思路：遍历 链表，找出val = 6 的 node ， 并找出此 node 的前驱结点NodePre和后驱节点 nodeAfter ，然后 NodePre.setNext(nodeAfter)
+     * @author guoyiguang
+     * @date 2023/1/29
+     * @param
+     * @return
+     */
+    public void delNodeByValue(){
+        MyNode firstNode = new MyNode();
+        firstNode.setValue("1");
+
+
+        MyNode firstNode2 = new MyNode();
+        firstNode2.setValue("2");
+
+
+        MyNode firstNode3 = new MyNode();
+        firstNode3.setValue("6");
+
+
+        MyNode firstNode4 = new MyNode();
+        firstNode4.setValue("3");
+
+
+        MyNode firstNode5 = new MyNode();
+        firstNode5.setValue("4");
+
+
+        MyNode firstNode6 = new MyNode();
+        firstNode6.setValue("5");
+
+
+
+        MyNode firstNode7 = new MyNode();
+        firstNode7.setValue("6");
+
+        //
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+        firstNode3.setNext(firstNode4);
+        firstNode4.setNext(firstNode5);
+        firstNode5.setNext(firstNode6);
+        firstNode6.setNext(firstNode7);
+
+        String val = "1";
+
+
+
+        MyNode dummyHead = new MyNode() ; // 设置虚拟节点
+        dummyHead.setNext(firstNode);     // 将虚拟节点置于 头结点前面
+
+
+        MyNode nodePre = dummyHead;
+        MyNode nodeAfter = firstNode.getNext() ;
+
+        // =  右边 理解为 堆， = 左边理解为 栈
+        MyNode temNode = dummyHead ;
+        while(temNode != null){
+            if(!StringUtils.isEmpty(temNode.getValue()) && temNode.getValue().equals(val)){
+                nodePre.setNext(nodeAfter);
+            }
+            // 遍历当前节点 ： 实际 是要准备  下一个 node  的前驱结点和后驱节点
+
+            // 设置 nodePre
+            nodePre = temNode;
+
+            // 设置 nodeAfter
+            if(null != temNode.getNext()){
+                // 下一个节点的后驱节点 两个 next
+                nodeAfter = temNode.getNext().getNext();
+            }else{
+                nodeAfter = null;
+            }
+
+            temNode = temNode.getNext();
+        }
+
+        // 返回头结点
+        System.out.println(dummyHead.getNext());
+        System.out.println(dummyHead.getNext());
+
+    }
+
+
+
 
 
 }
