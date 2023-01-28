@@ -63,7 +63,10 @@ public class LinkedListApplicationTests {
         //尾结点插入
         //insertElementToLink(myNode1,myNode4,null,insertNode);
         // 2 和 3 中间插入
-        insertElementToLink(myNode1,myNode2,myNode3,insertNode);
+        //insertElementToLink(myNode1,myNode2,myNode3,insertNode);
+
+
+        deleteAndInsertList();
 
 
 
@@ -608,11 +611,165 @@ public class LinkedListApplicationTests {
     }
 
 
+    /**
+     * 功能描述 : 合并K个链表
+     *    先将前两个合并，
+     *    之后再将后⾯的逐步合 并进来，这样的的好处是只要将两个合并的写清楚，
+     *    合并K个就容易很多
+     * @author guoyiguang
+     * @date 2023/1/28
+     * @param
+     * @return
+     */
+    public MyNode mergeKLists(MyNode[] lists) {
+        MyNode res = null;
+        for (MyNode list: lists) {
+             res = combineSortedLink(res, list);
+        }
+        return res;
+    }
+
+    /**
+     * 功能描述
+     * LeetCode1669：
+     * 给你两个链表 list1 和 list2 ，它们包含的元素分别为 n 个和 m 个。
+     * 请你将 list1 中下标从a到b的 节点删除，并将list2 接在被删除节点的位置。
+     *  node1 ---> （node2 ---> node3  ---> ） node4
+     *         node5   node6
+     *         操作 ： 需要将  node1 的next 设置为  node5  ，  node6 的 next 设置为 node4
+     *
+     *          操作： 首先找出 node1 和 node4(下标b 节点的next 节点) ，然后 找出  list2  的 首节点  node5 和 尾结点 node6
+     * @author guoyiguang
+     * @date 2023/1/28
+     * @param
+     * @return
+     */
+    public void  deleteAndInsertList(){
+        MyNode firstNode  = new MyNode();
+        firstNode.setValue("node1");
+
+        MyNode firstNode2  = new MyNode();
+        firstNode2.setValue("node2");
+
+        MyNode firstNode3  = new MyNode();
+        firstNode3.setValue("node3");
+
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+
+
+        MyNode secondNode = new MyNode();
+        secondNode.setValue("node4");
+
+        MyNode secondNode5 = new MyNode();
+        secondNode5.setValue("node5");
+
+        secondNode.setNext(secondNode5);
+
+        // 删除 list1 中下标从a到b的 元素，并 找出 a 的前一节点 和  b的 后一节点
+        MyNode firstNodePre = null;
+        MyNode firstNodeAfter = null;
+
+        int i = 0;
+        // 模拟
+        int a = 0;
+        int b = 1;
+        MyNode temFirst = firstNode;
+        while(null != temFirst){
+            if(i < a){
+                firstNodePre = temFirst;
+            }
+            if(i  >  b){
+                firstNodeAfter = temFirst.getNext();
+                break;
+            }
+
+            i++;
+            temFirst = temFirst.getNext();
+        }
+
+        // 找出 secondNode 的首节点和尾结点
+        MyNode secondNodeHead = secondNode;
+        MyNode secondNodeTail = null;
+
+        MyNode temSecond =  secondNode;
+        while(temSecond != null){
+            if(null == temSecond.getNext()){
+                //   = 号右边可以理解为 堆内存，左边可以理解为 栈内存
+                secondNodeTail =  temSecond;
+            }
+
+            temSecond = temSecond.getNext();
+        }
+
+        // 将  list2  的节点 插入 到  list1  里
+        if(firstNodePre != null){
+            firstNodePre.setNext(secondNodeHead);
+        }else{
+            firstNode.setNext(secondNodeHead);
+        }
+        secondNodeTail.setNext(firstNodeAfter);
+        System.out.println(firstNode);
+        System.out.println(firstNode);
+
+
+
+    }
+
+
 
     /**
      ***************************************************高频面试题 end**********************************************
      */
 
+
+
+    /**
+     *************************************************** 双指针 专题**********************************************
+     */
+
+    /**
+     * 功能描述 ：
+     *
+     *    LeetCode876 给定⼀个头结点为 head 的⾮空单链表，返回链表的中间结点。如果有两个中间结点，则返回第⼆个中间结点
+     *
+     *    示例1
+     *     输⼊：[1,2,3,4,5]
+     *     输出：此列表中的结点 3
+     *     示例2：
+     *    输⼊：[1,2,3,4,5,6]
+     *    输出：此列表中的结点 4
+     *
+     *    思路：
+     *    这个问题⽤经典的快慢指针可以轻松搞定，⽤两个指针 slow 与 fast ⼀起遍历链表(一般遍历 链表只需要一个指针 )。
+     *     slow ⼀次⾛⼀步， fast⼀次⾛两步。那么当 fast 到达链表的末尾时， slow 必然位于中间
+     *
+     * @author guoyiguang
+     * @date 2023/1/28
+     * @param
+     * @return
+     */
+     public void   middleNode(MyNode  firstNode){
+         MyNode result = null;
+         MyNode temSlowNode = firstNode;
+         MyNode temQuickNode = firstNode;
+         while(null != temQuickNode && null != temQuickNode.getNext()){
+             if(null == temQuickNode.getNext()){
+                 result = temSlowNode;
+             }
+
+             temSlowNode = temSlowNode.getNext();
+             if(null != temQuickNode.getNext()){
+                 temQuickNode = temQuickNode.getNext().getNext();
+             }
+
+
+         }
+
+
+
+
+     }
 
 
 }
