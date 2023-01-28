@@ -93,14 +93,19 @@ public class LinkedListApplicationTests {
         myNode3.setNext(myNode4);
 
 
-        MyNode myNode1Second = new MyNode();
-        myNode1Second.setValue("myNode1_Second");
-        myNode1Second.setNext(myNode4);
+        MyNode myNode5_ = new MyNode();
+        myNode5_.setValue("myNode5");
+        myNode5_.setNext(null);
 
         // 两个链表找出第一个一样的node
         //MyNode myNode = chooseFirstCommonNodeV1(myNode1,myNode1Second);
-        MyNode myNode = chooseFirstCommonNodeV2(myNode1,myNode1Second);
+//        MyNode myNode = chooseFirstCommonNodeV2(myNode1,myNode1Second);
+//        System.out.println(myNode);
+
+        // 合并两个有序的链表
+        MyNode myNode =  combineSortedLink(myNode1,myNode5_);
         System.out.println(myNode);
+
 
 
     }
@@ -499,7 +504,7 @@ public class LinkedListApplicationTests {
      *  链表B ： 2  4  6 8
      *
      *  思路①：链表 A 和  链表 B 的各个元素比较，最小值 是 新链表 的下一个节点，继续遍历，直到 遍历完（时间复杂度高）
-     *  思路②：栈/队列  将 链表A 和  链表B 分别放到 两个 队列里，然后  同时出队，两个元素比较  ，最小值 是 新链表 的下一个节点，继续出队列
+     *  思路②：栈/队列  将 链表A 和  链表B 分别放到 两个 队列里，然后  同时出队，两个元素比较  ，最小值 是 新链表 的下一个节点(往链表 尾部插入节点)，继续出队列
      *  思路③：就是将⼀个链表结点拆下来，逐个合并到另外⼀个对应位置上去（本质还是链表的插入）
      *
      * @author guoyiguang
@@ -508,12 +513,93 @@ public class LinkedListApplicationTests {
      * @return
      */
     public MyNode combineSortedLink(MyNode firstNode1,MyNode firstNode2){
-       // TODO
+        // 思路②实现：
+
+        MyNode temFirst = firstNode1;
+        // 将  firstNode1 元素放到 队列里
+        Queue<MyNode> queueFirst = new LinkedList<>();
+        while(temFirst != null){
+            queueFirst.add(temFirst);
+            // firstNode1 链表 的下一个节点
+            temFirst = temFirst.getNext();
+        }
+
+
+        MyNode temSecond = firstNode2;
+        // 将  firstNode1 元素放到 队列里
+        Queue<MyNode> queueSecond = new LinkedList();
+        while(temSecond != null){
+            queueSecond.add(temSecond);
+            // firstNode1 链表 的下一个节点
+            temSecond = temSecond.getNext();
+        }
+
+
+        MyNode firstNode = null;
+        // 将出队列的 元素 放到新的队列里
+        MyNode queueFirstNode = queueFirst.poll();
+        MyNode queueSecondNode = queueSecond.poll();
+        // 不知道循环几次，但是知道终止条件
+        while(!queueFirst.isEmpty() || !queueSecond.isEmpty() ){
+            if(queueFirstNode != null && queueSecondNode != null){
+
+                if(queueFirstNode.getValue().compareTo(queueSecondNode.getValue()) <=0){
+                    if(null == firstNode){
+                        firstNode = queueFirstNode;
+                    }else{
+                        //  firstNode 节点 尾结点 插入 新的节点
+                        insertNewNodeInTail(firstNode,queueFirstNode);
+                    }
+
+                    queueFirstNode = queueFirst.poll();
+                }else{
+                    if(null == firstNode){
+                        firstNode = queueSecondNode;
+                    }else{
+                        //  firstNode 节点 尾结点 插入 新的节点
+                        insertNewNodeInTail(firstNode,queueSecondNode);
+                    }
+
+                    queueSecondNode = queueSecond.poll();
+
+                }
+
+            }else if(queueFirstNode == null && queueSecondNode != null){
+
+                insertNewNodeInTail(firstNode,queueSecondNode);
+                queueSecondNode = queueSecond.poll();
+
+
+            }else if(queueFirstNode != null && queueSecondNode == null){
+                insertNewNodeInTail(firstNode,queueFirstNode);
+                queueFirstNode = queueFirst.poll();
+
+            }
+
+        }
+
+
 
 
 
         return null;
 
+    }
+
+    public void  insertNewNodeInTail(MyNode firstNode,MyNode insertNode){
+        MyNode tem = firstNode ;
+        MyNode lastNode = firstNode ;
+        while(tem != null){
+            if(null == tem.getNext()){
+                lastNode = tem;
+                // 终止循环
+                break;
+            }
+            tem = tem.getNext();
+
+        }
+
+        lastNode.setNext(insertNode);
     }
 
 
