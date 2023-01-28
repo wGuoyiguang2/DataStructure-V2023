@@ -66,7 +66,9 @@ public class LinkedListApplicationTests {
         //insertElementToLink(myNode1,myNode2,myNode3,insertNode);
 
 
-        deleteAndInsertList();
+        //deleteAndInsertList();
+
+        rotate();
 
 
 
@@ -765,6 +767,98 @@ public class LinkedListApplicationTests {
 
 
          }
+
+
+
+
+     }
+
+
+     /**
+      * 功能描述 :  旋转链表
+      *
+      * Leetcode61.先看题⽬要求：给你⼀个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。
+      *
+      * 示例1:
+      * 输⼊：head = [1,2,3,4,5], k = 2
+      * 输出：[4,5,1,2,3]
+      *
+      * 思路：  先找到  k 的位置，将 数组分成  1,2,3 和  4,5 然后 这两个链表 合并
+      *
+      *
+      * @author guoyiguang
+      * @date 2023/1/28
+      * @param
+      * @return
+      */
+
+     public void rotate(){
+
+         MyNode firstNode = new MyNode();
+         firstNode.setValue("node1");
+
+         MyNode firstNode2 = new MyNode();
+         firstNode2.setValue("node2");
+
+         MyNode firstNode3 = new MyNode();
+         firstNode3.setValue("node3");
+
+         MyNode firstNode4 = new MyNode();
+         firstNode4.setValue("node4");
+
+         MyNode firstNode5 = new MyNode();
+         firstNode5.setValue("node5");
+
+
+         firstNode.setNext(firstNode2);
+         firstNode2.setNext(firstNode3);
+         firstNode3.setNext(firstNode4);
+         firstNode4.setNext(firstNode5);
+
+
+
+          //示例1 :
+          //输⼊ ：head = [1,2,3,4,5], k = 2
+          //输出 ：[4,5,1,2,3]
+
+         // 分成两个 链表( 将 3 的  next 设为 null)， 需要 找出 第二个 链表的 首节点 和 第二个链表的尾结点(原链表的尾结点)
+         int k = 2 ;
+
+         MyNode secondLinkHead = firstNode;
+         MyNode secondLinkTail = firstNode;
+
+         MyNode temSizeNode = firstNode ;
+         int size = 0;
+         while(temSizeNode != null){
+             size++;
+             secondLinkTail = temSizeNode ;
+             temSizeNode = temSizeNode.getNext();
+
+         }
+
+          // 选出 size - k 个元素 ，切割 链表
+         int index = 0;
+         MyNode splitNode = firstNode ;
+         while(splitNode != null){
+             index++;
+             if(size - k == index){
+                 secondLinkHead = splitNode.getNext();
+                 // 设为 尾结点
+                 splitNode.setNext(null);
+             }
+             splitNode = splitNode.getNext();
+         }
+
+         //示例1 :
+         //输⼊ ：head = [1,2,3,4,5], k = 2
+         //输出 ：[4,5,1,2,3]
+
+         secondLinkTail.setNext(firstNode);
+
+         System.out.println(secondLinkHead);
+         System.out.println(secondLinkHead);
+
+
 
 
 
