@@ -72,7 +72,9 @@ public class LinkedListApplicationTests {
         //rotate();
        // delNodeByValue();
 
-        getLastNumNode();
+       // getLastNumNode();
+
+        deleteDuplicateNode();
 
 
 
@@ -1023,6 +1025,8 @@ public class LinkedListApplicationTests {
         dummyHead.setNext(firstNode);     // 将虚拟节点置于 头结点前面
 
 
+
+        // 头节点 的 前驱结点和后驱节点
         MyNode nodePre = dummyHead;
         MyNode nodeAfter = firstNode.getNext() ;
 
@@ -1039,7 +1043,7 @@ public class LinkedListApplicationTests {
 
             // 设置 nodeAfter
             if(null != temNode.getNext()){
-                // 下一个节点的后驱节点 两个 next
+                // 下一个节点的后驱节点 两个 next，temNode.getNext() 代表下一个节点
                 nodeAfter = temNode.getNext().getNext();
             }else{
                 nodeAfter = null;
@@ -1054,8 +1058,103 @@ public class LinkedListApplicationTests {
 
     }
 
+    /**
+     * 功能描述 ： 删除重复元素
+     * LeetCode 83 存在⼀个按升序排列的链表，请你删除所有重复的元素，使每个元素只出现⼀次。
+     *
+     *  示例1：
+     *  输⼊：head = [1,1,2,3,3]
+     *  输出：[1,2,3]
+     *
+     *  思路： 判断重复，用hash，将元素放到set里面
+     *        然后改变节点的指向
+     * @author guoyiguang
+     * @date 2023/1/29
+     * @param
+     * @return
+     */
+    public void deleteDuplicateNode(){
+
+        MyNode firstNode = new MyNode();
+        firstNode.setValue("1");
+
+        MyNode firstNode2 = new MyNode();
+        firstNode2.setValue("1");
+
+
+        MyNode firstNode3 = new MyNode();
+        firstNode3.setValue("2");
+
+        MyNode firstNode4 = new MyNode();
+        firstNode4.setValue("3");
+
+
+        MyNode firstNode5 = new MyNode();
+        firstNode5.setValue("3");
+
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+        firstNode3.setNext(firstNode4);
+        firstNode4.setNext(firstNode5);
+
+        Set<String> set = new HashSet<>();
 
 
 
+        // 头结点 的  前驱结点和后驱节点
+        MyNode dummyNode = new MyNode();  // 虚拟节点 ，最后返回 头结点，return dummyNode.getNext();
+        dummyNode.setNext(firstNode);
+        MyNode preNode = dummyNode;
+        MyNode afterNode = firstNode.getNext();
+
+
+        MyNode temNode = dummyNode;
+        // [1,1,2,3,3]
+        while(null != temNode){
+            if(!StringUtils.isEmpty(temNode.getValue()) && set.contains(temNode.getValue())){
+                // 删除节点
+                preNode.setNext(afterNode);
+
+            }else if(!StringUtils.isEmpty(temNode.getValue())){
+                // set 没包含
+                set.add(temNode.getValue());
+            }
+
+
+            // 设置下一个节点的相关节点
+
+            // 设置前驱结点
+            preNode = temNode;
+
+            // 下一个节点
+            temNode = temNode.getNext();
+
+            // 设置后驱结点
+            if(null != temNode){
+                afterNode = temNode.getNext();
+            }else{
+                afterNode = null;
+            }
+
+
+
+        }
+
+        // 返回头结点
+        System.out.println(dummyNode.getNext());
+        System.out.println(dummyNode.getNext());
+
+
+    }
+
+
+
+
+
+
+    /**
+     **********************************************  链表 反转 专题 **********************************************
+     *
+     */
 
 }
