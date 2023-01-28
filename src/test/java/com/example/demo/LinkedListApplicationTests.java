@@ -536,11 +536,15 @@ public class LinkedListApplicationTests {
 
 
         MyNode firstNode = null;
+
         // 将出队列的 元素 放到新的队列里
         MyNode queueFirstNode = queueFirst.poll();
         MyNode queueSecondNode = queueSecond.poll();
+
         // 不知道循环几次，但是知道终止条件
-        while(!queueFirst.isEmpty() || !queueSecond.isEmpty() ){
+        //  queue 已经为 空，但是 还有出队列的元素咩有处理
+        while(!queueFirst.isEmpty() || !queueSecond.isEmpty()  ||  queueFirstNode != null ||  queueSecondNode != null ){
+
             if(queueFirstNode != null && queueSecondNode != null){
 
                 if(queueFirstNode.getValue().compareTo(queueSecondNode.getValue()) <=0){
@@ -579,10 +583,7 @@ public class LinkedListApplicationTests {
         }
 
 
-
-
-
-        return null;
+        return firstNode;
 
     }
 
@@ -590,6 +591,7 @@ public class LinkedListApplicationTests {
         MyNode tem = firstNode ;
         MyNode lastNode = firstNode ;
         while(tem != null){
+            // 找到 旧 尾结点
             if(null == tem.getNext()){
                 lastNode = tem;
                 // 终止循环
@@ -599,7 +601,10 @@ public class LinkedListApplicationTests {
 
         }
 
+        // 旧尾结点 尾部插入 新节点
         lastNode.setNext(insertNode);
+        // 设置尾结点(这一步很重要： 因为尾结点的标识就是 next  is null)
+        insertNode.setNext(null);
     }
 
 
