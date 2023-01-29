@@ -74,7 +74,10 @@ public class LinkedListApplicationTests {
 
        // getLastNumNode();
 
-        deleteDuplicateNode();
+       // deleteDuplicateNode();
+
+        // 反转链表
+        reverseLink();
 
 
 
@@ -1153,8 +1156,76 @@ public class LinkedListApplicationTests {
 
 
     /**
-     **********************************************  链表 反转 专题 **********************************************
+     **********************************************  链表 反转  **********************************************
      *
      */
+
+    /**
+     * 功能描述:
+     *        反转链表:
+     *        [1,2,3,4,5]
+     *        [5,4,3,2,1]
+     *
+     *        思路：
+     *            原链表 首节点 设置为 新链表尾结点
+     *             改变相邻 node 的 指向：  1————>2 改为 2————>1
+     *            最后返回 原链表 尾结点
+     * @author guoyiguang
+     * @date 2023/1/29
+     * @param
+     * @return
+     */
+    public void  reverseLink(){
+        //
+        MyNode firstNode = new MyNode();
+        firstNode.setValue("1");
+
+        MyNode firstNode2 = new MyNode();
+        firstNode2.setValue("2");
+
+        MyNode firstNode3 = new MyNode();
+        firstNode3.setValue("3");
+
+        MyNode firstNode4 = new MyNode();
+        firstNode4.setValue("4");
+
+        MyNode firstNode5 = new MyNode();
+        firstNode5.setValue("5");
+
+
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+        firstNode3.setNext(firstNode4);
+        firstNode4.setNext(firstNode5);
+
+        MyNode  oldTailNode   = firstNode ;
+
+        MyNode  temNode1 = firstNode;
+
+        MyNode  temNode2 = firstNode;
+        while(null != temNode1){
+            // [1,2,3,4,5]
+
+            temNode2 = temNode1.getNext();
+            if(null != temNode2){
+                temNode2.setNext(temNode1);
+            }else{
+                // 原尾结点 变 头结点
+                oldTailNode = temNode1;
+
+                // 原头结点 变 新 链表 尾结点
+                firstNode.setNext(null);
+
+            }
+
+            temNode1 = temNode1.getNext();
+        }
+
+
+
+        System.out.println(oldTailNode);
+        System.out.println(oldTailNode);
+
+    }
 
 }
