@@ -1166,7 +1166,7 @@ public class LinkedListApplicationTests {
      *        [1,2,3,4,5]
      *        [5,4,3,2,1]
      *
-     *        思路：
+     *        思路：（头变尾，尾变头）
      *            原链表 首节点 设置为 新链表尾结点
      *             改变相邻 node 的 指向：  1————>2 改为 2————>1
      *            最后返回 原链表 尾结点
@@ -1203,22 +1203,28 @@ public class LinkedListApplicationTests {
         MyNode  temNode1 = firstNode;
 
         MyNode  temNode2 = firstNode;
+        MyNode  curNextNextNode = firstNode.getNext();
         while(null != temNode1){
             // [1,2,3,4,5]
 
-            temNode2 = temNode1.getNext();
+            temNode2 = curNextNextNode;
             if(null != temNode2){
+                // 获取 temNode2 原来的next  3 存下来
+                curNextNextNode=  temNode2.getNext();
                 temNode2.setNext(temNode1);
+
             }else{
                 // 原尾结点 变 头结点
                 oldTailNode = temNode1;
 
-                // 原头结点 变 新 链表 尾结点
-                firstNode.setNext(null);
 
             }
 
             temNode1 = temNode1.getNext();
+
+            // 原头结点 变 新 链表 尾结点(获取到 头结点的下一个节点 first.setNext(null)
+             firstNode.setNext(null);
+
         }
 
 
