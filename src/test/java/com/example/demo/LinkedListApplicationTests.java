@@ -77,7 +77,7 @@ public class LinkedListApplicationTests {
        // deleteDuplicateNode();
 
         // 反转链表
-        reverseLink();
+        reverseLinkV1();
 
 
 
@@ -1166,16 +1166,18 @@ public class LinkedListApplicationTests {
      *        [1,2,3,4,5]
      *        [5,4,3,2,1]
      *
-     *        思路：（头变尾，尾变头）
+     *        思路：（头变尾，尾变头）            TODO： 此路不通就重新换个思路（走进死胡同没必要浪费时间）
      *            原链表 首节点 设置为 新链表尾结点
-     *             改变相邻 node 的 指向：  1————>2 改为 2————>1
+     *             改变相邻 node 的 指向  ：  1————>2 改为 1<————2
+     *                                     难点： 改变转向后 ，获取 2 的next 就获取 1 ，而不是原来的 3
+     *                                          此路不通，得重新换个思路
      *            最后返回 原链表 尾结点
      * @author guoyiguang
      * @date 2023/1/29
      * @param
      * @return
      */
-    public void  reverseLink(){
+    public void  reverseLinkWrongExample(){
         //
         MyNode firstNode = new MyNode();
         firstNode.setValue("1");
@@ -1204,14 +1206,17 @@ public class LinkedListApplicationTests {
 
         MyNode  temNode2 = firstNode;
         MyNode  curNextNextNode = firstNode.getNext();
+        //   [1,2,3]   --->       1<---2<---3
+        //    [1,2,3,4,5]   --->       1<---2<---3
         while(null != temNode1){
             // [1,2,3,4,5]
 
-            temNode2 = curNextNextNode;
+            temNode2 =  temNode1.getNext();
             if(null != temNode2){
-                // 获取 temNode2 原来的next  3 存下来
+                // 获取 temNode2 原来的next  3 存下来 TODO  重要
                 curNextNextNode=  temNode2.getNext();
                 temNode2.setNext(temNode1);
+                curNextNextNode.setNext(temNode2);
 
             }else{
                 // 原尾结点 变 头结点
@@ -1220,6 +1225,7 @@ public class LinkedListApplicationTests {
 
             }
 
+            // TODO 第一个node 是 1 ，经历上述代码 1<---2<---3  temNode1.getNext()  是 1
             temNode1 = temNode1.getNext();
 
             // 原头结点 变 新 链表 尾结点(获取到 头结点的下一个节点 first.setNext(null)
@@ -1227,11 +1233,105 @@ public class LinkedListApplicationTests {
 
         }
 
-
-
         System.out.println(oldTailNode);
         System.out.println(oldTailNode);
 
     }
+
+
+
+    /**
+     * 功能描述:
+     *        反转链表:
+     *        [1,2,3,4,5]
+     *        [5,4,3,2,1]
+     *
+     *
+     *
+     *        思路：引入 虚拟 节点，在虚拟节点 后面 插入 新的元素（链表反转转化为在 新的链表中插入新的元素）
+     *             新链表                                         旧链表
+     *             virtualNode--->1                             2--->3--->4--->5
+     *             virtualNode---> 2 ---> 1                     3--->4--->5
+     *             virtualNode---> 3---> 2 ---> 1               4--->5
+     *             virtualNode--->4---> 3---> 2 ---> 1             5
+     *             virtualNode--->5--->4---> 3---> 2 ---> 1        无
+     *
+     *             难点：就是获取 virtualNode 的下一个节点 virtualNextNode ，然后
+     *                 改变引用
+     *                 virtualNode.setNext(新Node)
+     *                 新Node.setNext(virtualNextNode);
+     *
+     *
+     *
+     * @author guoyiguang
+     * @date 2023/1/29
+     * @param
+     * @return
+     */
+    public void  reverseLinkV1() {
+        //
+        MyNode firstNode = new MyNode();
+        firstNode.setValue("1");
+
+        MyNode firstNode2 = new MyNode();
+        firstNode2.setValue("2");
+
+        MyNode firstNode3 = new MyNode();
+        firstNode3.setValue("3");
+
+        MyNode firstNode4 = new MyNode();
+        firstNode4.setValue("4");
+
+        MyNode firstNode5 = new MyNode();
+        firstNode5.setValue("5");
+
+
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+        firstNode3.setNext(firstNode4);
+        firstNode4.setNext(firstNode5);
+
+        MyNode virtualHeadNode = new MyNode();
+
+        MyNode temNode = firstNode;
+
+        while (null != temNode) {
+            // 1--->2--->3
+
+            // 新虚拟节点 还为 插入新的 节点
+            if(null == virtualHeadNode.getNext()){
+                virtualHeadNode.setNext(temNode);
+            }else{
+
+                // 以下操作 是  在  头结点  virtualNode 后面 插入目标节点  temNode
+                // 虚拟节点的 下一个节点
+                MyNode virtualNextNode = virtualHeadNode.getNext();
+
+                //  temNode  是即将要插入的目标节点
+
+                //  virtualNode 是首节点
+
+                // 插入(改变引用)
+                virtualHeadNode.setNext(temNode);
+
+                // 将 下个节点 存起来 （重要）
+                // 比如  temNode 为 2  ，next 为 3, temNode.setNext(virtualNextNode) 后 2 的next 是 1
+                // 但是我们下次遍历期待的结果 是  2 原来的 next 3  所以 先将  3 保存起来
+                MyNode next = temNode.getNext();
+                temNode.setNext(virtualNextNode);
+
+
+               temNode = next;
+
+
+            // 原来头结点 变尾结点(next is null)
+            firstNode.setNext(null);
+        }
+    }
+        // 虚拟头节点 的下个节点 就是原来节点的末节点
+        System.out.println(virtualHeadNode.getNext());
+        System.out.println(virtualHeadNode.getNext());
+    }
+
 
 }
