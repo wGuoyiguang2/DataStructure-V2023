@@ -78,11 +78,8 @@ public class LinkedListApplicationTests {
 
         // 反转链表
        // reverseLinkV1();
-        reverseLinkV2();
-
-
-
-
+        //reverseLinkV2();
+       reverseLinkV3Recursion();
 
 
 
@@ -1430,6 +1427,158 @@ public class LinkedListApplicationTests {
         System.out.println(preNode);
         System.out.println(preNode);
     }
+
+
+    // TODO  递归实现：①反转  ②遍历
+
+    /**
+     * 功能描述:
+     *        反转链表:
+     *        [1,2,3,4,5]
+     *        [5,4,3,2,1]
+     *
+     *
+     *
+     *        思路：引入 虚拟 节点，在虚拟节点 后面 插入 新的元素（链表反转转化为在 新的链表中插入新的元素）
+     *      原：   1--->2--->3--->4--->5
+     *
+     *
+     *             1    2--->3--->4--->5
+     *
+     *     pre    cur  next
+
+     *             1<---2    3--->4--->5
+     *           pre   cur  next
+     *
+     *            1<---2<--- 3    4--->5
+     *                pre   cur  next
+     *
+     *
+     *
+     *             1<---2<--- 3<---4    5
+     *                      pre   cur  next
+     *
+     *
+     *
+     *              1<---2<--- 3<---4<---  5
+     *                               pre   cur  next
+     *
+     *
+     *
+     *        思路： 每次遍历每一个节点的时候，涉及到 了  pre ，cur 和next 三个节点
+     *              所以考虑 将这三个节点 存起来
+     *              然后改变引用
+     *
+     *
+     *
+     *
+     *            next =   cur.getNext();
+     *              cur.setNext(pre); // 改变引用
+     *
+     *
+     *
+     * @author guoyiguang
+     * @date 2023/1/29
+     * @param
+     * @return
+     */
+    public void  reverseLinkV3Recursion() {
+        //
+        MyNode firstNode = new MyNode();
+        firstNode.setValue("1");
+
+        MyNode firstNode2 = new MyNode();
+        firstNode2.setValue("2");
+
+        MyNode firstNode3 = new MyNode();
+        firstNode3.setValue("3");
+
+        MyNode firstNode4 = new MyNode();
+        firstNode4.setValue("4");
+
+        MyNode firstNode5 = new MyNode();
+        firstNode5.setValue("5");
+
+
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+        firstNode3.setNext(firstNode4);
+        firstNode4.setNext(firstNode5);
+
+
+        MyNode preNode = null;
+        MyNode cur = firstNode;
+        MyNode nextNode = firstNode.getNext();
+
+        preNode = recursionNodeV1(preNode , cur , nextNode);
+        //recursionNodeV2(preNode , cur , nextNode);
+
+        //  preNode 变量刚开始是 空的 ，经过 反转后， cur 指向了  firstNode5 节点
+        System.out.println(preNode);
+        System.out.println(preNode);
+    }
+
+
+    /**
+     * 功能描述 ： 递归：理论上来说 凡是用while 处理的都可以用递归实现：因为有 相似的处理逻辑而且有终止条件
+     * @author guoyiguang
+     * @date 2023/2/1
+     * @param
+     * @return
+     */
+    public MyNode recursionNodeV1(MyNode preNode ,MyNode cur ,MyNode nextNode){
+        // 递归的终止条件
+        if (null == cur) {
+            return   preNode ;
+        }
+
+
+        // 递归相似的逻辑
+
+            // 1<--- 2 <--- 3  <---4     5
+            //       pre   cur  next
+            // 先保存 下  nextNode， 因为   cur 的next 重写后，拿到的就是  3 而不是 5
+            nextNode = cur.getNext();
+            cur.setNext(preNode);
+
+            // preNode 重新赋值 （=  左边是栈里的数据，右边是堆里的数据  ，=  改变了 引用 ，preNode 之前指向 堆里的 3 现在指向 了堆里的 4）
+            preNode = cur;
+
+            // 遍历下一个数据
+            cur = nextNode;
+
+        return recursionNodeV1(preNode , cur , nextNode);
+
+    }
+
+
+    public void recursionNodeV2(MyNode preNode ,MyNode cur ,MyNode nextNode){
+        // 递归的终止条件
+        if (null == cur) {
+            return    ;
+        }
+
+
+        // 递归相似的逻辑
+
+        // 1<--- 2 <--- 3  <---4     5
+        //       pre   cur  next
+        // 先保存 下  nextNode， 因为   cur 的next 重写后，拿到的就是  3 而不是 5
+        nextNode = cur.getNext();
+        cur.setNext(preNode);
+
+        // preNode 重新赋值 （=  左边是栈里的数据，右边是堆里的数据  ，=  改变了 引用 ，preNode 之前指向 堆里的 3 现在指向 了堆里的 4）
+        preNode = cur;
+
+        // 遍历下一个数据
+        cur = nextNode;
+
+        recursionNodeV2(preNode , cur , nextNode);
+
+    }
+
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.entity.Question;
+import com.example.demo.entity.link.MyNode;
 import com.example.demo.entity.tree.TreeNode;
 import org.apache.tomcat.util.threads.TaskQueue;
 import org.junit.Test;
@@ -28,6 +29,8 @@ public class RecursionAppicationTest {
      * 递归的适用场景：（重复某个过程，直到什么什么为止）
      *    ①重复性的操作/重复性的计算逻辑
      *    ②有停止重复操作或者重复计算的条件
+     *
+     *    理论上，凡是用while 实现的代码都可以替换为递归，比如 链表节点的遍历，既可以用while 循环，也可以用递归实现
      *
      *    比如斐波那契-卢卡斯数列,树的递归，折半查找 等
      *
@@ -109,6 +112,66 @@ public class RecursionAppicationTest {
         return  lucasSequence(index-1)+lucasSequence(index-2);
 
     }
+
+
+
+    /**
+     * 功能描述：  递归 遍历单 链表
+     * @author guoyiguang
+     * @date 2023/2/1
+     * @param
+     * @return
+     */
+    @Test
+    public void  linkRecursion() {
+        //
+        MyNode firstNode = new MyNode();
+        firstNode.setValue("1");
+
+        MyNode firstNode2 = new MyNode();
+        firstNode2.setValue("2");
+
+        MyNode firstNode3 = new MyNode();
+        firstNode3.setValue("3");
+
+        MyNode firstNode4 = new MyNode();
+        firstNode4.setValue("4");
+
+
+
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+        firstNode3.setNext(firstNode4);
+
+
+
+
+        MyNode cur = firstNode;
+
+        MyNode result =  recursionNodeV1(cur);
+
+        System.out.println(result);
+        System.out.println(result);
+
+    }
+
+    public MyNode recursionNodeV1(MyNode cur){
+        // 递归的终止条件
+        if (null == cur.getNext()) {
+            System.out.println(cur.getValue());
+            return  cur ;
+        }
+
+        // 递归相似的逻辑： 打印当前节点，并 获取并打印下一个节点
+
+        System.out.println(cur.getValue());
+        // 遍历下一个数据
+        cur = cur.getNext();
+
+        return recursionNodeV1(cur);
+
+    }
+
 
 
 
