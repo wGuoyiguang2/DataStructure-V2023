@@ -79,7 +79,10 @@ public class LinkedListApplicationTests {
         // 反转链表
        // reverseLinkV1();
         //reverseLinkV2();
-       reverseLinkV3Recursion();
+       //reverseLinkV3Recursion();
+
+        // 部分反转
+        partReverse();
 
 
 
@@ -1576,6 +1579,166 @@ public class LinkedListApplicationTests {
         recursionNodeV2(preNode , cur , nextNode);
 
     }
+
+
+
+
+
+    /**
+     * 功能描述 ： 局部反转
+     *    LeetCode92 ：给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right。请你反转从位
+     *     置 left 到位置 right 的链表节点，返回反转后的链表。
+     *     示例 1：
+     *     输⼊：head = [1,2,3,4,5], left = 2, right = 4
+     *     输出：[1,4,3,2,5]
+     *
+     *     思路：分成三部分
+     *
+     *            [1]       [2,3,4]       [5]
+     *
+     *            bigPre     big       bigAfter
+     *
+     *
+     *  反转后：   bigPre     big_new     bigAfter
+     *
+     *            将 big 部分 反转成功后，再和  bigPre ,   bigAfter 拼接在一起
+     *
+     *
+     *            bigPre.setNext(big_new 头节点)
+     *            big_new 尾结点.setNext(bigAfter);
+     *
+     *            所以总共需要四个节点：
+     *
+     *            bigPre (left 前一个节点)
+     *
+     *            bigAfter（right 后驱节点）
+     *
+     *            big_new 头节点(也是 原来的 right 节点)
+     *
+     *            big_new 尾节点(也是 原来的 left 节点)
+     *
+     *
+     * @author guoyiguang
+     * @date 2023/2/7
+     * @param
+     * @return
+     */
+    @Test
+    public void partReverse(){
+
+        MyNode firstNode = new MyNode();
+        firstNode.setValue("1");
+
+        MyNode firstNode2 = new MyNode();
+        firstNode2.setValue("2");
+
+        MyNode firstNode3 = new MyNode();
+        firstNode3.setValue("3");
+
+        MyNode firstNode4 = new MyNode();
+        firstNode4.setValue("4");
+
+        MyNode firstNode5 = new MyNode();
+        firstNode5.setValue("5");
+
+
+        firstNode.setNext(firstNode2);
+        firstNode2.setNext(firstNode3);
+        firstNode3.setNext(firstNode4);
+        firstNode4.setNext(firstNode5);
+
+        int left = 2;
+        int right = 4;
+
+        MyNode bigPre = null;
+        MyNode bigAfter = null;
+        MyNode leftNode = null;
+        MyNode rightNode = null;
+
+
+        MyNode tem = firstNode;
+        int  i = 1;
+
+
+        //  [1]       [2,3,4]       [5]
+        //while(null != tem){
+        while(i <= (right+1)){
+
+            if(i==left){
+                leftNode = tem;
+            }
+
+            if(i==right){
+                rightNode = tem;
+            }
+
+            if(i==(right+1)){
+                bigAfter = tem;
+            }
+
+            if(leftNode == null){
+                bigPre =  tem;
+            }
+
+
+            if(null != tem){ // 防止空指针
+                tem = tem.getNext();
+            }
+
+            i++;
+
+        }
+
+
+        System.out.println("11");
+
+        // 然后将   [2,3,4] 反转---> leftNode 为头结点 ，right 为尾结点，
+
+        MyNode big_pre_ = null;
+
+        MyNode big_tem_cur = leftNode;
+
+        MyNode big_after = null;
+
+        //  循环到  bigAfter 就终止
+        while(null != big_tem_cur && big_tem_cur != bigAfter ){
+            // 设置next 之前先获取原来的 next
+             big_after = big_tem_cur.getNext();
+
+            big_tem_cur.setNext(big_pre_);
+
+            // 前置节点 引用 指向 当前节点
+            big_pre_ = big_tem_cur;
+            // 获取原链表 下一个 节点
+            big_tem_cur = big_after ;
+
+        }
+
+
+        // 拼接 最终结果
+
+
+
+        bigPre.setNext(rightNode);
+        leftNode.setNext(bigAfter);
+
+
+        // 循环最终结果集
+
+        MyNode temFinal = firstNode;
+        while(null != temFinal){
+            System.out.println(temFinal);
+            temFinal = temFinal.getNext() ;
+
+        }
+        System.out.println("a");
+
+
+
+
+    }
+
+
 
 
 
