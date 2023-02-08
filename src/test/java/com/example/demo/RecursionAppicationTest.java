@@ -362,6 +362,47 @@ public class RecursionAppicationTest {
 
     }
 
+    /**
+     * 功能描述 ： 一个正整数的阶乘
+     *       0!=1
+     *       1!=1
+     *       2!= 1*2;
+     *       3!= 1*2*3=2!*3=1!*2*3;
+     *
+     *
+     *
+     *       n!=1×2×3×...×(n-1)×n。
+     *           递归方式定义
+     *          =(n-1)!*n ;
+     *          = 1*2
+     * @author guoyiguang
+     * @date 2023/2/8
+     * @param
+     * @return
+     */
+    @Test
+    public void factorial(){
+
+
+        int i = factorialRecurison(4);
+        System.out.println(i);
+        System.out.println(i);
+
+    }
+
+    public int factorialRecurison(int n){
+        // 结束条件
+        if(n <= 0 ||  n == 1){
+            return 1;
+        }
+
+        // 相似的逻辑
+        //   3!= 1*2*3=2!*3=1!*2*3;
+       return  n * factorialRecurison(n-1);
+
+    }
+
+
 
 
 
