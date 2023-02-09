@@ -11,6 +11,10 @@ import java.util.Arrays;
 /**
  * 数组
  *
+ *
+ * 待做的题目：
+ *    jiOuShuFenLi2
+ *
  * @author guoyiguang
  * @description $
  * @date 2023/2/8$
@@ -417,6 +421,226 @@ public class ArrayApplication {
 
 
     }
+
+    // 删除有序数组中的重复项
+    /**
+     * 功能描述 :
+     *
+     *   LeetCode26 给你⼀个有序数组 nums ，请你原地删除重复出现的元素，使每个元素只出现⼀次 ，返回删除后数组
+     *   的新⻓度。不要使⽤额外的数组空间，你必须在原地修改输⼊数组 并在使⽤ O(1) 额外空间的条件下完成
+     *
+     *
+     *   示例1：
+     * 输⼊：nums = [1,1,2]
+     * 输出：2, nums = [1,2]
+     * 解释：函数应该返回新的⻓度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新⻓度
+     * 后⾯的元素。
+     * 例⼦2：
+     * 输⼊：nums = [0,0,1,1,1,2,2,3,3,4]
+     * 输出：5, nums = [0,1,2,3,4]
+     * 解释：函数应该返回新的⻓度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组
+     * 中超出新⻓度后⾯的元素。
+     *
+     *   思路 ：
+     *       是 有序数组 所以， slow 对应的值  和 fast 对应的值   比较大小
+     *       定义两个指针
+     *       慢指针 左边是符合要求的数据 部分，快指针 右边 是待处理的部分，
+     *       直到 快指针 遍历完
+     * @author guoyiguang
+     * @date 2023/2/9
+     * @param
+     * @return
+     */
+    @Test
+    public void deleteRepeatableElement(){
+
+        //int[] array = new int[]{0,0,1,1,1,2,2,3,3,4};
+        int[] array = new int[]{1,1,2};
+
+        // 最终的结果
+        //  0,1,2,3,4
+
+        int  slow = 0 ;
+        //int  fast = 0 ;
+
+        for(int fast = 1 ; fast <=  array.length-1 ; fast++){
+
+            // fast 值要 大于 slow的值 ，则 fast 的值 放在  slow 下一个 的位置， 然后 slow + 1;
+            if(array[fast] >  array[slow]){
+                //
+                array[slow+1] = array[fast];
+                slow++;
+            }
+
+        }
+
+
+        System.out.println(slow);
+        System.out.println(slow);
+
+
+    }
+
+
+    /**
+     * *********************************************元素奇偶移动专题************************************************
+     */
+
+    /**
+     * 功能描述 奇偶数分离
+     *
+     *
+     *        LeetCode905，按奇偶排序数组。给定⼀个⾮负整数数组 A ，返回⼀个数组，在该数组中， A 的所有偶数元素之
+     *        后跟着所有奇数元素。你可以返回满⾜此条件的任何数组作为答案。
+     *
+     *
+     *        输⼊：[3,1,2,4]
+     *       输出：[2,4,3,1]
+     *       输出 [4,2,3,1]，[2,4,1,3] 和 [4,2,1,3] 也会被接受。
+     *
+     *
+     *
+     *       思路： 对撞型双指针
+     *            left 指针 判断出奇数 ，停止，right 指针 从右 开始 判断出 偶数 ，则替换这两个数
+     *            直到 left 和 right 相交
+     * @author guoyiguang
+     * @date 2023/2/9
+     * @param
+     * @return
+     */
+    @Test
+    public void jiOuShuFenLi(){
+
+        // 对撞型双指针
+         int[] array = new int[]{3,1,2,4};
+
+         // 目标结果  2,4,3,1 （保证前偶后奇就行）
+
+        // 定位左半部分  奇数
+        int left = 0;
+
+        // 定位右半部分  偶数
+        int right = array.length-1;
+
+        for(int i = 0;i<=array.length-1;i++){
+
+            if(left<=right){
+                if(array[left]%2==0){
+                    left++;
+                }else{
+                    //
+                    if(array[right]%2==0){
+                        // 替换位置
+                        int  tem = array[left];
+                        array[left] = array[right] ;
+                        array[right] = tem;
+                        left++;
+
+                    }else{
+                        // 找 右半部分的 前一个 偶数
+                        right--;
+                    }
+                }
+            }
+
+        }
+
+        System.out.println(array);
+        System.out.println(array);
+
+    }
+
+
+    // 承接上一题
+    // 调整后的顺序仍与原始数组的顺序⼀致
+
+    /**
+     * 功能描述 奇偶数分离
+     *
+     *
+     *        LeetCode905，按奇偶排序数组。给定⼀个⾮负整数数组 A ，返回⼀个数组，在该数组中， A 的所有偶数元素之
+     *        后跟着所有奇数元素。你可以返回满⾜此条件的任何数组作为答案。
+     *
+     *
+     *        输⼊：[3,1,2,4]
+     *        输出：[2,4,3,1]  (和原顺序一样)
+     *
+     *
+     *
+     *
+     *       思路： 对撞型双指针
+     *            left 指针 判断出奇数 ，停止，right 指针 从右 开始 判断出 偶数 ，则替换这两个数
+     *            直到 left 和 right 相交
+     * @author guoyiguang  TODO 待做
+     * @date 2023/2/9
+     * @param
+     * @return
+     */
+    @Test
+    public void jiOuShuFenLi2(){
+
+        //
+        int[] array = new int[]{3,1,2,4};
+
+
+    }
+
+
+    /**
+     *****************************************  数组轮转问题 **********************************
+     */
+
+    /**
+     * 功能描述
+     *
+     *   LeetCode189.给你⼀个数组，将数组中的元素向右轮转 k 个位置，其中 k 是⾮负数。
+     *
+     *   例如：
+     * 输⼊: nums = [1,2,3,4,5,6,7], k = 3
+     * 输出: [5,6,7,1,2,3,4]
+     * 解释:
+     * 向右轮转 1 步: [7,1,2,3,4,5,6]
+     * 向右轮转 2 步: [6,7,1,2,3,4,5]
+     * 向右轮转 3 步: [5,6,7,1,2,3,4]
+     *
+     *  思路：
+     *      分析目标结果 ：
+     *      最后k个元素放到前面 k 个位置，原来的元素统一 右移动 k 个元素
+     * @author guoyiguang
+     * @date 2023/2/9
+     * @param
+     * @return
+     */
+    @Test
+    public void rotate(){
+
+        int[] array = new int[]{1,2,3,4,5,6,7};
+
+//
+//        for(int k = 3 ;k>=1; k--){
+//            // [1,2,3,4,5,6,7]--->[7,1,2,3,4,5,6]
+//
+//            int tem = array[array.length-1];
+//
+//            // 下标统一后移一位
+//            for(int i= 0 ;i<=array.length-2;i++){
+//                int te =  array[i+1];
+//                // [1,1,3,4,5,6,7]
+//                array[i+1] = array[i];
+//                array[i+2] =  te;
+//            }
+//            array[0] = tem;
+//
+//
+//        }
+//
+//        System.out.println(array);
+//        System.out.println(array);
+
+    }
+
+
+
 
 
 
