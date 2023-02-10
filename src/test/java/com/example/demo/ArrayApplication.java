@@ -6,10 +6,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
- * 数组
+ * 数组：
+ *     没思路的时候想想快慢双指针，或者对撞双指针
  *
  *
  * 待做的题目：
@@ -664,13 +667,121 @@ public class ArrayApplication {
 
             // 设置原始的末尾值 为 第一个元素值
             array[0] = lastValue;
-
         }
 
         System.out.println(array);
         System.out.println(array);
 
     }
+
+
+
+
+    /**
+     *  数组的区间专题
+     *
+     *  LeetCode228.给定⼀个⽆重复元素的有序整数数组nums。返回恰好覆盖数组中所有数字的最⼩有序区间范围列
+     * 表。也就是说，nums 的每个元素都恰好被某个区间范围所覆盖，并且不存在属于某个范围但不属于 nums 的数字x 。
+     * 列表中的每个区间范围 [a,b] 应该按如下格式输出：
+     * "a->b" ，如果 a != b
+     * "a" ，如果 a == b
+     *
+     *
+     * 示例1：
+     * 输⼊：nums = [0,1,2,4,5,7]
+     * 输出：["0->2","4->5","7"]
+     * 解释：区间范围是：
+     * [0,2] --> "0->2"
+     * [4,5] --> "4->5"
+     * [7,7] --> "7"
+     * 示例2：
+     * 输⼊：nums = [0,2,3,4,6,8,9]
+     * 输出：["0","2->4","6","8->9"]
+     * 解释：区间范围是：
+     * [0,0] --> "0"
+     * [2,4] --> "2->4"
+     * [6,6] --> "6"
+     * [8,9] --> "8->9"
+     *
+     *
+     *   思路：快慢指针
+     *        慢指针左边是符合要求的，快指针如果 发现数据不连续，则 将 慢指针和快指针对应的 值输出来
+     *        然后 快慢指针 一起从 下一个 元素继续直到，fast 指针循环结束
+     */
+    @Test
+    public void summaryRanges(){
+
+        List<String>  result = new ArrayList<>();
+
+
+       //int[] nums = new int[]{0,2,3,4,6,8,9};
+       int[] nums = new int[]{0,1,2,4,5,7};
+
+       int slow = 0;
+
+       // 0,   2,3,4,    6,     8,9
+       for(int fast = 0;fast <= nums.length-1 ;fast++){
+            // 最后一个元素特殊处理
+           if(fast ==  nums.length-1){
+
+               if(fast > slow){
+                   if(nums[fast] >  (nums[fast-1]+1)){
+
+                       //输出 两个
+                       StringBuilder sb = new StringBuilder();
+                       sb.append(nums[slow]);
+                       sb.append("--->");
+                       sb.append(nums[fast-1]);
+
+                       result.add(sb.toString());
+
+                       StringBuilder sb2 = new StringBuilder();
+                       sb2.append(nums[fast]);
+
+                       result.add(sb2.toString());
+
+                   }else{
+                       StringBuilder sb = new StringBuilder();
+                       sb.append(nums[slow]);
+                       sb.append("--->");
+                       sb.append(nums[fast]);
+                       result.add(sb.toString());
+
+                   }
+               }else if (fast == slow){
+                   StringBuilder sb = new StringBuilder();
+                   sb.append(nums[slow]);
+                   sb.append("--->");
+                   sb.append(nums[slow]);
+                   result.add(sb.toString());
+               }
+
+
+           }else{
+               if(nums[fast+1] >  (nums[fast]+1)){
+                   StringBuilder sb = new StringBuilder();
+                   sb.append(nums[slow]);
+                   sb.append("--->");
+                   sb.append(nums[fast]);
+                   // slow 跳到  fast+1 位置上
+                   slow=fast+1;
+
+                   result.add(sb.toString());
+               }
+           }
+
+
+       }
+
+        System.out.println(result);
+        System.out.println(result);
+
+    }
+
+
+
+
+
 
 
 
