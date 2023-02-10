@@ -6,9 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 数组：
@@ -775,6 +773,53 @@ public class ArrayApplication {
 
         System.out.println(result);
         System.out.println(result);
+
+    }
+
+    /**
+     *  * * * * * * * * * * * ** * *  *  出现次数专题  * * * * * * * * * * * * * * * * *  * ** * * *
+     */
+
+    /**
+     * 功能描述
+     *           输⼊如下所示的⼀个⻓度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组⻓度的
+     *           ⼀半，因此输出2，如果不存在则输出0。
+     *
+     *
+     *           思路：快慢指针 貌似不行
+     *                hash  集合貌似可以
+     * @author guoyiguang
+     * @date 2023/2/10
+     * @param
+     * @return
+     */
+    @Test
+    public void  moreThanHalfNum(){
+
+        int[] array = new int[]{1,2,3,2,2,2,5,4,2};
+
+        int half = array.length/2;
+
+        Map<Integer,Integer> map = new HashMap<>();
+
+        for(int i = 0 ; i <= array.length-1 ; i++){
+
+            if(map.containsKey(array[i])){
+
+                map.put(array[i],map.get(array[i])+1);
+
+            }else{
+                map.put(array[i],1);
+            }
+
+
+            if(map.get(array[i]) >=  half){
+
+                System.out.println(array[i]);
+
+            }
+
+        }
 
     }
 
