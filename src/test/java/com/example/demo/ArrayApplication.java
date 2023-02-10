@@ -616,26 +616,59 @@ public class ArrayApplication {
 
         int[] array = new int[]{1,2,3,4,5,6,7};
 
-//
-//        for(int k = 3 ;k>=1; k--){
-//            // [1,2,3,4,5,6,7]--->[7,1,2,3,4,5,6]
-//
-//            int tem = array[array.length-1];
-//
-//            // 下标统一后移一位
-//            for(int i= 0 ;i<=array.length-2;i++){
-//                int te =  array[i+1];
-//                // [1,1,3,4,5,6,7]
-//                array[i+1] = array[i];
-//                array[i+2] =  te;
-//            }
-//            array[0] = tem;
-//
-//
-//        }
-//
-//        System.out.println(array);
-//        System.out.println(array);
+        for(int k = 3 ;k>=1; k--){
+            // [1,2,3,4,5,6,7]--->[7,1,2,3,4,5,6]
+            // 储存 末尾 的 值，防止被覆盖掉
+            int lastValue = array[array.length-1];
+
+            // 用前面的值 覆盖 后面的值  (反向遍历) ： 凭的就是灵光一现（技巧性问题）
+            for(int i = array.length-1;i>=1;i--){
+                // [1,1,3,4,5,6,7]
+                array[i] = array[i-1];
+            }
+
+            // 设置原始的末尾值 为 第一个元素值
+            array[0] = lastValue;
+
+        }
+
+        System.out.println(array);
+        System.out.println(array);
+
+    }
+
+
+    /**
+     * 功能描述 :要求同上
+     * @author guoyiguang
+     * @date 2023/2/10
+     * @param
+     * @return
+     */
+    @Test
+    public void rotateMethod2(){
+
+        int[] array = new int[]{1,2,3,4,5,6,7};
+
+        for(int k = 3 ;k>=1; k--){
+            // [1,2,3,4,5,6,7]--->
+            // [7,1,2,3,4,5,6]
+            // 储存 末尾 的 值，防止被覆盖掉
+            int lastValue = array[array.length-1];
+
+            // 用前面的值 覆盖 后面的值  (正向遍历) ：
+            for(int i = 1;i<=array.length-1;i++){
+                // [ ,1,3,4,5,6,7]  后面的元素 往后 移动
+                array[array.length-i] = array[array.length-i-1];
+            }
+
+            // 设置原始的末尾值 为 第一个元素值
+            array[0] = lastValue;
+
+        }
+
+        System.out.println(array);
+        System.out.println(array);
 
     }
 
