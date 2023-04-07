@@ -1,6 +1,15 @@
 package com.example.demo.entity;
 
+import com.mysql.cj.conf.BooleanProperty;
+import com.mysql.cj.conf.IntegerProperty;
+import com.mysql.cj.conf.LongProperty;
+import com.mysql.cj.conf.StringProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * @program: springboot_01
@@ -58,4 +67,9 @@ public class Boss {
 
         return Objects.hash(name, age);
     }
+
+
+
+
+
 }
