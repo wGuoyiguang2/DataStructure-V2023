@@ -97,17 +97,18 @@ public class ExportTests {
         keyList.add(headImage);
 
         //
-        exportOneSheet(keyList,rowDataList);
+        String fileName = "D:\\abc.xls";
+        exportOneSheet(fileName,keyList,rowDataList);
 
 
     }
 
-    public void  exportOneSheet(List<ExcelExportEntity> keyList,List<Map<String, Object>> rowDataList) throws IOException {
+    public void  exportOneSheet(String fileName,List<ExcelExportEntity> keyList,List<Map<String, Object>> rowDataList) throws IOException {
 
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(),
                 keyList, rowDataList);
 
-        FileOutputStream fos = new FileOutputStream("D:\\oneSheet.xls");
+        FileOutputStream fos = new FileOutputStream(fileName);
         workbook.write(fos);
         fos.close();
     }
