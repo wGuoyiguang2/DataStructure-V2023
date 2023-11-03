@@ -54,11 +54,11 @@ public class AsyncServiceImp implements AsyncService {
     //@SneakyThrows
     public Boy getBoy(){
         //Thread.sleep(6000L);
-        Boy boy = new Boy();
+        //Boy boy = new Boy();
 //        boy.setName(String.valueOf(Math.random()));
 //        boy.setSex(1);
 //        boy.setChaodai("汉朝");
-        return boy;
+        return null;
 
     }
 }

@@ -31,4 +31,11 @@ public class Boy   implements Serializable {
     // 线程名称
     private String threadName;
 
+    public Boy(String name, Integer sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+    public Boy() {
+
+    }
 }
