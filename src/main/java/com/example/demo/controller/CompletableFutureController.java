@@ -47,7 +47,7 @@ public class CompletableFutureController {
         long endTime = System.currentTimeMillis();
         //  单线程 打印 8000000   总耗时:17秒
         //  单线程 打印 80000000   总耗时:202秒
-        //  单线程 打印 8 0000 0000   总耗时: 秒
+        //  单线程 打印 8 0000 0000   总耗时:2259秒
         System.out.println("总耗时:"+(endTime-startTime)/1000 +"秒");
     }
     public static void main1(String[] args) throws ExecutionException, InterruptedException {
