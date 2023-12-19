@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -38,17 +35,8 @@ public class CompletableFutureController {
 //        return "success";
 //    }
 
-    public static void main(String[] args) {
-        int i = Runtime.getRuntime().availableProcessors();
-        System.out.println("cpu 核数"+i);
-        System.out.println("cpu 核数"+i);
-        long startTime = System.currentTimeMillis();
-        task();
-        long endTime = System.currentTimeMillis();
-        //  单线程 打印 8000000   总耗时:17秒
-        //  单线程 打印 80000000   总耗时:202秒
-        //  单线程 打印 8 0000 0000   总耗时:2259秒
-        System.out.println("总耗时:"+(endTime-startTime)/1000 +"秒");
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        thenApplyThenApplyAsync();
     }
     public static void main1(String[] args) throws ExecutionException, InterruptedException {
         int i = Runtime.getRuntime().availableProcessors();
@@ -210,6 +198,39 @@ public class CompletableFutureController {
 //    所以在我们的日常开发中，要平衡创建线程和执行任务的开销，如果这个任务不值得我们为它开启一个线程去执行，那么就不要去创建线程。
 //    推荐使用线程池，而不要使用new Thread()的方式，因为如果存在大量的耗时的任务的时候，Thread的频繁创建和销毁，
 //    也是有一定的开销的，线程池可以为我们带来线程的复用。
+
+
+
+
+   public static void thenApplyThenApplyAsync() throws ExecutionException, InterruptedException {
+
+       CompletableFuture<List<Map<String,Object>>> orgFuture = CompletableFuture.supplyAsync(
+               ()->{
+                   List<Map<String,Object>> result = new ArrayList<>();
+                   Map<String,Object> m = new HashMap<>();
+                   m.put("name","三");
+                   result.add(m);
+                   return result;
+               }
+       );
+
+       CompletableFuture<List<Map<String,Object>>> thenApplyFuture = orgFuture.thenApply((a) -> {
+           System.out.println("入参："+a);
+           Map<String,Object> m = new HashMap<>();
+           m.put("name","四");
+           a.add(m);
+
+           return a;
+           // 打印异常
+       }).exceptionally((e) -> {
+           e.printStackTrace();
+           return new ArrayList<>();
+       });;
+
+
+       System.out.println(thenApplyFuture.get());
+
+    }
 
 
 

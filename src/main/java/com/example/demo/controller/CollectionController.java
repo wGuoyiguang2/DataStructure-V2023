@@ -19,7 +19,8 @@ public class CollectionController {
 
 
     public static void main(String[] args) {
-        listToAnotherList();
+        //listToAnotherList();
+        findFirstOrElse();
     }
 
 
@@ -192,6 +193,28 @@ public class CollectionController {
         });
         System.out.println("分组后排序"+result);
 
+    }
+
+
+
+    /**
+     * 功能描述: 查找是否存在，不存在给默认值 findFirst
+     * @author guoyiguang
+     * @date 2023/12/19
+     * @param
+     * @return
+     */
+    public static void findFirstOrElse(){
+
+        // 判断是否存在，不存在的话给默认值 findFirst
+        List<Map<String,Object>> result = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        map.put("name","san");
+        map.put("phone","15011133055");
+        result.add(map);
+        String s = result.stream().filter(o -> ((Map) o).get("name").equals("san")).map(o -> ((Map) o).get("phone").toString()).findFirst().orElse("");
+        // 15011133055
+        System.out.println(s);
     }
 
 
