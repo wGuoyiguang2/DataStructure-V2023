@@ -99,6 +99,9 @@ public class CollectionController {
         collect.sort(Comparator.comparingInt(e->(int)e.get("age")));
 
         System.out.println("升序： java 8 之后 v3"+collect);
+        // 支持 属性为空
+        collect.stream().sorted(Comparator.comparing(e->(int)e.get("age"),Comparator.nullsLast(Integer::compareTo))).collect(Collectors.toList());
+
 
         // 降序
         Collections.sort(collect,new Comparator(){
@@ -145,6 +148,11 @@ public class CollectionController {
         });
         System.out.println("多属性排序 age 升序，age一样的话，name 降序： java 8 之前 "+collect);
 
+
+        // 支持 属性为空
+        collect.stream().sorted(Comparator.comparing(e->(int)((Map)e).get("age"),Comparator.nullsLast(Integer::compareTo)).reversed()).collect(Collectors.toList());
+
+
         //  多属性排序： java8 之后
 
         final List<Map<String, Object>> collect1 = collect.stream().sorted((o1, o2) -> {
@@ -177,8 +185,18 @@ public class CollectionController {
         System.out.println("多属性排序 age 升序，age一样的话，name 降序： java 8 之后v2 "+collectV2);
 
 
+        // 分组后排序(先按照age分组，再按name倒叙排序) : 内部排序
+        List<Map<String,Object>> result = new ArrayList<>();
+        list.stream().collect(Collectors.groupingBy(e->e.get("age"))).forEach((k, v) -> {
+            result.addAll(v.stream().sorted(Comparator.comparing(e->((Map)e).get("name").toString()).reversed()).collect(Collectors.toList()));
+        });
+        System.out.println("分组后排序"+result);
 
     }
+
+
+
+
 
 
 
